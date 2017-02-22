@@ -1,9 +1,22 @@
-local ffi = require('ffi')
-
 Line = {}
 Line.__index = Line
 
+local function round(...)
+  local arg = {...}
+  if #arg == 1 then
+    local n = arg[1]
+    return n>= 0 and math.floor(n + .5) or math.ceil(n - .5)
+  else
+    local t = {}
+    for i, v in ipairs(arg) do
+      table.insert(t, round(v))
+    end
+    return unpack(t)
+  end
+end
+
 local iterate_line = function (x0, y0, x1, y1)
+                x0, y0, x1, y1 = round(x0, y0, x1, y1)
                 local dx, dy = math.abs(x1 - x0), -math.abs(y1 - y0)
                 local sx, sy = x0 < x1 and 1 or -1, y0 < y1 and 1 or -1
                 local err, e2 = dx + dy
@@ -38,6 +51,6 @@ setmetatable(Line, {__call = function(self, x0, y0, x1, y1)
                                 return  Line.getPoints(x0, y0, x1, y1)
 end})
 
-for px, py in Line(0, 0, 10, 10) do
+for px, py in Line(0.3, 4.31, 11.4, 11.945) do
     print(px, py)
 end
