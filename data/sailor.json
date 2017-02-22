@@ -1,31 +1,31 @@
 {
-    "type": "actor",
+    "category": "actor",
     "id": "sailor",
-    "img": { "path": "sailor.png", "sheet": true, "animated": true, 
-             "is_cardinal": true, "rows": 5, "cols": 4 },
-    "animation_data": [
+    "img_path": "sailor.png",
+    "sheet": { "rows": 5, "cols": 4 },
+    "animations": [
         {"id": "idle", 
-         "frames": [
-             { "dir": "north", "range": [1, 1] },
-             { "dir": "side", "range": [2, 1] },
-             { "dir": "south", "range": [3, 1] },
-        ],
+         "frames": {
+              "north": [1, 1],
+              "side":  [2, 1],
+              "south": [3, 1],
+         },
         "timing": 0.2,
         },
         {"id": "walking", 
-         "frames": [
-             { "dir": "north", "range": ["1-2", 2] },
-             { "dir": "side", "range": ["3-4", 2] },
-             { "dir": "south", "range": ["1-2", 3] },
-        ],
+         "frames": {
+              "north": ["1-2", 2] ,
+              "side":  ["3-4", 2] ,
+              "south": ["1-2", 3] ,
+        },
         "timing": 0.2,
         },
         {"id": "working", 
-         "frames": [
-             { "dir": "north", "range": ["3-4", 3] },
-             { "dir": "side", "range": ["1-3", 4,] },
-             { "dir": "south", "range": ["1-3", 5] },
-        ],
+         "frames": {
+              "north": ["3-4", 3] ,
+              "side": ["1-3", 4,] ,
+              "south": ["1-3", 5] ,
+        },
         "timing": 0.2,
         }
     ]

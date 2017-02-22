@@ -1,23 +1,14 @@
 package.path = package.path .. ";../?.lua"
 
-local lume = require('lume')
-local json = require('json')
+local lume = require('libs/lume')
+local json = require('libs/json')
+local anim8 = require('libs/anim8')
 
-function getFileNames(files)
-  local t = {}
-  for _, file in ipairs(files) do
-    local name = lume.split(file, '.')
-    table.insert(t, name[1])
-  end
-  return t
-end
+local utils = require('utils')
+
 
 local img_atlas = { character = {}, fx = {} }
 
-function LoadJSON(path)
-  local contents, _ = love.filesystem.read(path)
-  return json.decode(contents)
-end
 
 function BuildAtlas(data)
   for key, obj in pairs(data) do
@@ -41,7 +32,6 @@ end
 
 function love.load()
   local files = love.filesystem.getDirectoryItems('assets/')
-  local image_names = getFileNames(files)
   local data = LoadJSON('sprite_info.json')
   BuildAtlas(data)
 end
