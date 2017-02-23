@@ -1,6 +1,9 @@
-local lume = require('libs/lume')
+local lume = require('lib/lume')
+local json = require('lib/json')
 
-function getFileNames(files)
+local utils = {}
+
+function utils.getFileNames(files)
   local t = {}
   for _, file in ipairs(files) do
     local name = lume.split(file, '.')
@@ -9,7 +12,7 @@ function getFileNames(files)
   return t
 end
 
-function loadJSON(path)
+function utils.loadJSON(path)
   local contents, _ = love.filesystem.read(path)
   return json.decode(contents)
 end
@@ -57,19 +60,5 @@ function newAtlasEntry (atlas, path)
 
   atlas[obj.category][obj.id] = entry
 end
-    
-      
 
-function buildImageObj(img_info)
-  
-  local o = {}
-  if img.animated == true then
-    obj = newAnimationObj( img, img_info)
-
-    
-
-
-function buildAnimationTable(obj)
-  local ani_t = {}
-  ani_t.img = love.graphics.newImage(obj.img.path
-
+return utils

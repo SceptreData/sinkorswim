@@ -1,0 +1,28 @@
+Sink or Swim Goals
+
+    AssetAtlas
+      Where all assets / resources are stored.
+      Giant factory class
+        -Loads images, builds animations
+        -Stores raw values/constants
+
+    Navigational Map
+        - Shows position
+        - orientation
+        - last known enemy positions
+        - hydrophone indicators
+
+    Ship
+      Stations
+
+    Crew
+      Perform Duties/jobs
+      Repairs
+
+    Hydrophone Implementation
+      Rotating raycast, with diminishing strength?
+      Can lock on to signal
+
+      
+
+

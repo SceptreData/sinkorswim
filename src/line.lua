@@ -55,6 +55,4 @@ setmetatable(Line, {__call = function(self, x0, y0, x1, y1)
                                 return  Line.getPoints(x0, y0, x1, y1)
 end})
 
-for px, py in Line(0.3, 4.31, 11.4, 11.945) do
-    print(px, py)
-end
+return Line

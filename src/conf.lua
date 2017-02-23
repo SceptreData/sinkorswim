@@ -2,7 +2,6 @@ ConfigTable = {}
 
 function love.conf(t)
   t.identity = "sinkorswim"
-  t.version = "0.0.1"
   t.window.title = "Sink or Swim"
 
   t.window.width = 1200

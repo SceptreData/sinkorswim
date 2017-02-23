@@ -1,8 +1,8 @@
 package.path = package.path .. ";../?.lua"
 
-local lume = require('libs/lume')
-local json = require('libs/json')
-local anim8 = require('libs/anim8')
+local lume = require('lib/lume')
+local json = require('lib/json')
+local anim8 = require('lib/anim8')
 
 local utils = require('utils')
 
@@ -31,8 +31,14 @@ function BuildAtlas(data)
 end
 
 function love.load()
-  local files = love.filesystem.getDirectoryItems('assets/')
-  local data = LoadJSON('sprite_info.json')
+  --local files = love.filesystem.getDirectoryItems('../assets/')
+  print(love.filesystem.getSource())
+  local files = love.filesystem.getDirectoryItems('../data')
+  for k, file in ipairs(files) do
+    print(k .. ". " .. file) --outputs something like "1. main.lua"
+  end
+  print(love.filesystem.exists(path))
+  local data = utils.loadJSON('../data/sprite_info.json')
   BuildAtlas(data)
 end
 
