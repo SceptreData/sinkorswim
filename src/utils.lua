@@ -17,13 +17,6 @@ function utils.loadJSON(path)
   return json.decode(contents)
 end
 
-function getSpriteDimensions(img, sheet_info)
-  local img_w, img_h = img:getDimensions()
-  local sprite_w = img_w / sheet_info.cols
-  local sprite_h = img_h / sheet_info.rows
-
-  return sprite_w, sprite_h
-end
 
 function buildAnimationTable(img, raw_obj)
   local anim_t = {}

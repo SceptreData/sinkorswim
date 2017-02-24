@@ -1,10 +1,3 @@
-package.path = package.path .. ";../?.lua"
-
-local lume = require('lib/lume')
-local json = require('lib/json')
-local anim8 = require('lib/anim8')
-
-local utils = require('utils')
 
 
 local img_atlas = { character = {}, fx = {} }

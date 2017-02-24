@@ -1,7 +1,7 @@
 {
     "category": "actor",
     "id": "sailor",
-    "img_path": "sailor.png",
+    "img": "sailor.png",
     "sheet": { "rows": 5, "cols": 4 },
     "animations": [
         {"id": "idle", 
