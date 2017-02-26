@@ -44,6 +44,7 @@ end
 local sailor, world
 
 function love.load()
+  start = love.timer.getTime()
   scr_w, scr_h = lg.getDimensions()
   Atlas:add('data/sailor.json')
 
@@ -59,6 +60,7 @@ end
 
 function love.draw()
   lg.setColor(255, 255, 255)
+  lg.scale(1.5)
   sailor.animation.cur:draw(sailor.img, sailor.x, sailor.y)
 end
 

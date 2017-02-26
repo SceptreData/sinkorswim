@@ -105,6 +105,10 @@ function Vec2:rotateMe(rad)
     return self
 end
 
+function Vec2.rotateAround(a, b, rad)
+  return (b - a):rotate(rad) + a
+end
+
 function Vec2.perpendicular(v)
     return new(-v.y, v.x)
 end
@@ -117,7 +121,7 @@ function Vec2.angleTo(a, b)
 end
 
 function Vec2.toString(v)
-    return '(' .. v.x ..',' .. v.y .. ')'
+    return '(' .. v.x ..', ' .. v.y .. ')'
 end
 
 local Vec2_mt = {}
@@ -159,12 +163,5 @@ end
 Vec2_mt.__tostring = Vec2.toString
 
 ffi.metatype(new, Vec2_mt)
-
-local v2 = setmetatable({}, Vec2_mt)
-local foo = v2(3, 4)
-local bar = v2(1,2)
-print(v2.toString(bar))
-local z = foo:add(bar)
-print(z.x, z.y)
 
 return setmetatable({}, Vec2_mt)
