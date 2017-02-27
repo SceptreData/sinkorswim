@@ -33,22 +33,24 @@ function Animation.attach(animations)
   end
   a.flipped = false
   a.changed = true
-  a.cur = a.idle.south
+  a.cur = a.idle.down
   return a
 end
 
 function Animation:set(state, dir)
    -- Determine whether we need to flip our sprite.
    local flip = false
-   if dir == 'east' then
-     dir = 'side'
+   if dir == 'right' then
      flip = self.flipped
-   elseif dir == 'west' then
-     flip = not self.flipped
      dir = 'side'
-   else
-     flip = self.flipped
-   end
+   elseif dir == 'left' then
+     if self.flipped == true then
+       flip = false
+     else
+       flip = true
+     end
+     dir = 'side'
+  end
 
   self.cur = self[state][dir]
   if flip == true  then

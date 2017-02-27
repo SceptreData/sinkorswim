@@ -12,6 +12,7 @@ local Atlas = {}
 Atlas.__index = Atlas
 
 Atlas.actor = {}
+Atlas.prop = {}
 
 function Atlas:add(path)
   local o = utils.loadJSON(path)
@@ -28,24 +29,25 @@ function Atlas:add(path)
     else
       entry.frames = buildStaticSheet(entry.img, o.sheet, sw, sh)
     end
+    entry.sw, entry.sh = sw, sh
   end
 
   self[o.category][o.id] = entry
 end
 
 function buildStaticSheet(img, sheet, sw, sh)
+  local img_w, img_h = img:getDimensions()
   local frames = {}
-  for y = 0, sheet.rows do
-    for x = 0, sheet.cols do
+  print("rows:", sheet.rows, "cols:", sheet.cols)
+  for y = 0, sheet.rows - 1 do
+    for x = 0, sheet.cols - 1 do
         local q = love.graphics.newQuad(x * sw, y * sh, sw, sh, img_w, img_h )
-        table.insert(entry.frames, q)
+        table.insert(frames, q)
       end
     end
+  print(#frames)
   return frames
 end
-
-
-
 
 function getSpriteDimensions(img, sheet_info)
   local img_w, img_h = img:getDimensions()

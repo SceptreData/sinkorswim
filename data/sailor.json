@@ -6,25 +6,25 @@
     "animations": [
         {"id": "idle", 
          "frames": {
-              "north": [1, 1],
+              "up": [1, 1],
               "side":  [2, 1],
-              "south": [3, 1],
+              "down": [3, 1],
          },
         "timing": 0.3,
         },
         {"id": "walking", 
          "frames": {
-              "north": ["1-2", 2] ,
+              "up": ["1-2", 2] ,
               "side":  ["3-4", 2, 1, 3] ,
-              "south": ["2-3", 3] ,
+              "down": ["2-3", 3] ,
         },
         "timing": 0.3,
         },
         {"id": "working", 
          "frames": {
-              "north": ["1-2", 4] ,
+              "up": ["1-2", 4] ,
               "side": ["3-4", 4,] ,
-              "south": ["2-4", 5] ,
+              "down": ["2-4", 5] ,
         },
         "timing": 0.3,
         }

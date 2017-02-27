@@ -20,6 +20,10 @@ function Vec2.isVector(v)
     return ffi.istype('vec2_t', v)
 end
 
+function Vec2.isZero(v)
+  return v.x == 0 and v.y == 0
+end
+
 function Vec2.new(x, y)
     if x and y then
         return new(x, y)
@@ -33,6 +37,9 @@ function Vec2:clone(v)
 end
 
 function Vec2.add(a, b)
+    if type(b) == 'number' then
+      return new(a.x + b, a.y + b)
+    end
     return new(a.x + b.x, a.y + b.y)
 end
 

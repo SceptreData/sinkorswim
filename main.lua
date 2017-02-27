@@ -9,70 +9,55 @@ local fs = love.filesystem
 local lg = love.graphics
 
 Atlas = require('atlas')
-Animation = require('animation')
+Game = require('game')
+Window = require('window')
 
-local scr_w, scr_h
+local Actor = require('actor')
+local Animation = require('animation')
+local Collision = require('collision')
+local Movement = require('movement')
+local Prop = require('prop')
 
--- TODO: Following functions should be worked into an Actor component
-function newActor(id, x, y, state, dir)
-  local data = Atlas.actor[id]
-  local a = {}
-  a.id = id
-  a.x, a.y = x or scr_w/2, y or scr_h/2
-  a.state = state or 'idle'
-
-  a.dir = dir or 'south' 
-  a.img = data.img
-  a.animation = Animation.attach(data.anim)
-
-  return a
-end
-
-function changeDir(a, dir)
-  if dir == a.dir then return end
-  a.dir = dir
-  a.animation:flag()
-end
-
-function changeState(a, state)
-  if state == a.state then return end
-  a.state = state
-  a.animation:flag()
-end
------------------------------------------------
-
-local sailor, world
+local sailor, green_box, world
 
 function love.load()
-  start = love.timer.getTime()
-  scr_w, scr_h = lg.getDimensions()
+  Window.init()
   Atlas:add('data/sailor.json')
+  Atlas:add('data/redgreen.json')
 
-  sailor = newActor('sailor')
+  world = Game:new()
 
-  world = tiny.world(Animation.system, sailor)
+  sailor = Actor('sailor', Window.screen_w/2, Window.screen_h/2)
+  green_box = Prop('debugBox', 2, 300, 300, true)
+  
+  world:addEntity(sailor)
+  world:addEntity(green_box)
+  print(sailor.animation.cur:getDimensions())
 end
 
 
 function love.update(dt)
   world:update(dt)
+  if Collision.checkBox(sailor, green_box) then
+    love.window.showMessageBox("Collision!", "Objects have collided!", 'info')
+  end
 end
 
 function love.draw()
   lg.setColor(255, 255, 255)
-  lg.scale(1.5)
-  sailor.animation.cur:draw(sailor.img, sailor.x, sailor.y)
+  green_box:draw()
+  sailor:draw()
 end
 
 function love.keypressed(k)
   if k == 'escape' then
     love.event.quit()
   end
-  if k == 'left' then changeDir(sailor, 'west')
-  elseif k == 'right' then changeDir(sailor, 'east')
-  elseif k == 'up' then changeDir(sailor, 'north')
-  elseif k == 'down' then changeDir(sailor, 'south')
-  elseif k == 'u' then changeState(sailor, 'working')
-  elseif k == 'w' then changeState(sailor, 'walking')
+  if k == 'left' then sailor:move('left', 10)
+  elseif k == 'right' then sailor:move('right', 10)
+  elseif k == 'up' then sailor:move('up', 10)
+  elseif k == 'down' then sailor:move('down', 10)
+  elseif k == 'u' then sailor:changeState('working')
+  elseif k == 'w' then sailor:changeState('walking')
   end
 end
