@@ -15,10 +15,26 @@ Window = require('window')
 local Actor = require('actor')
 local Animation = require('animation')
 local Collision = require('collision')
+local Map = require('map')
 local Movement = require('movement')
 local Prop = require('prop')
 
-local sailor, green_box, world
+local m2 = {{1,1,1,1,1,1},
+            {1,0,0,0,0,1},
+            {1,0,0,0,0,1},
+            {1,0,0,0,0,1},
+            {1,1,1,1,1,1}}
+
+local strmap = [[
+111111
+100001
+100001
+100001
+111111
+]]
+local test_map = '111111\n100001\n100001\n100001\n100001'
+--local test_map = '111111\n101101\n101101\n100001\n111111'
+local sailor, green_box, world, _map, path
 
 function love.load()
   Window.init()
@@ -27,26 +43,32 @@ function love.load()
 
   world = Game:new()
 
+  _map = Map:new(strmap, 300, 300, '0')
+  local foo = _map.grid:getMap()
+  path, size = _map:getPath(2, 2, 5,2)
+
+
   sailor = Actor('sailor', Window.screen_w/2, Window.screen_h/2)
-  green_box = Prop('debugBox', 2, 300, 300, true)
-  
   world:addEntity(sailor)
-  world:addEntity(green_box)
-  print(sailor.animation.cur:getDimensions())
+
+  --green_box = Prop('debugBox', 1, 300, 300, true)
+  --world:addEntity(green_box)
 end
 
 
 function love.update(dt)
   world:update(dt)
-  if Collision.checkBox(sailor, green_box) then
-    love.window.showMessageBox("Collision!", "Objects have collided!", 'info')
-  end
+  -- if Collision.checkBox(sailor, green_box) then
+  --   love.window.showMessageBox("Collision!", "Objects have collided!", 'info')
+  -- end
 end
 
 function love.draw()
   lg.setColor(255, 255, 255)
-  green_box:draw()
+  --green_box:draw()
   sailor:draw()
+  _map:draw()
+  _map:drawPath(path)
 end
 
 function love.keypressed(k)

@@ -41,6 +41,10 @@ function Rect.drawBorder(a)
   lg.rectangle('line', a.x, a.y, a.w, a.h)
 end
 
+function Rect.fill(a)
+  lg.rectangle('fill', a.x, a.y, a.w, a.h)
+end
+
 function Rect.toString(a)
   return 'RECT: ' .. a.x .. ', ' .. a.y .. ': ' .. a.w .. ', ' .. a.h
 end
