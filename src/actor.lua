@@ -8,7 +8,7 @@ local Vector = require('vec2')
 local Actor = {}
 Actor.__index = Actor
 
-function Actor.new(id, x, y, state, dir)
+function Actor.new(id,x, y, state, dir)
   local data = Atlas.actor[id]
   local a = setmetatable({}, Actor)
   a.id = id

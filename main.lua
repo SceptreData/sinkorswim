@@ -19,33 +19,22 @@ local Map = require('map')
 local Movement = require('movement')
 local Prop = require('prop')
 
-local m2 = {{1,1,1,1,1,1},
-            {1,0,0,0,0,1},
-            {1,0,0,0,0,1},
-            {1,0,0,0,0,1},
-            {1,1,1,1,1,1}}
 
-local strmap = [[
-111111
-100001
-100001
-100001
-111111
-]]
-local test_map = '111111\n100001\n100001\n100001\n100001'
---local test_map = '111111\n101101\n101101\n100001\n111111'
 local sailor, green_box, world, _map, path
 
 function love.load()
   Window.init()
   Atlas:add('data/sailor.json')
   Atlas:add('data/redgreen.json')
+  Atlas:add('data/grid_ship.json')
+
+  assert(Atlas.ship.grid_ship.map_data)
 
   world = Game:new()
 
-  _map = Map:new(strmap, 300, 300, '0')
-  local foo = _map.grid:getMap()
-  path, size = _map:getPath(2, 2, 5,2)
+ -- _map = Map:new(strmap, 300, 300, '0')
+ -- local foo = _map.grid:getMap()
+ -- path, size = _map:getPath(2, 2, 5,2)
 
 
   sailor = Actor('sailor', Window.screen_w/2, Window.screen_h/2)
@@ -67,8 +56,8 @@ function love.draw()
   lg.setColor(255, 255, 255)
   --green_box:draw()
   sailor:draw()
-  _map:draw()
-  _map:drawPath(path)
+  -- _map:draw()
+  -- _map:drawPath(path)
 end
 
 function love.keypressed(k)
