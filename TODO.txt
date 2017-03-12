@@ -1,28 +1,96 @@
-Sink or Swim Goals
+*******************
+*  Sink or Swim   *
+*  Design doc     *
+*******************
 
-    AssetAtlas
-      Where all assets / resources are stored.
-      Giant factory class
-        -Loads images, builds animations
-        -Stores raw values/constants
+Pitch:
+
+    FTL meets Silent Hunter 3.
+
+    "Pressure, stealth, planning, disasters, explosions"
+     keep your crew alive as you hunt enemy boats.
+
+Core Game Loop:
+    Navigation Phase
+      Intercept enemy boats based on reports.
+        - Shape/Map drawing tools to help?
+
+    Attack Phase - (The good stuff)
+      Positioning, Torpedo Salvo planning, avoiding detection
+      "Stealthily approach targets, fire torpedos
+
+Features:
+    
+  Sub:
+      Can ascend/Descend
+      Periscope
+      crew management
+      Stations
+      Floods
+      Fires
+      Collapse
+
+  Torpedos:
+      what do different torpedos do?
+      How do they affect detection?
 
     Navigational Map
-        - Shows position
-        - orientation
-        - last known enemy positions
-        - hydrophone indicators
-
-    Ship
-      Stations
-
-    Crew
-      Perform Duties/jobs
-      Repairs
-
-    Hydrophone Implementation
-      Rotating raycast, with diminishing strength?
-      Can lock on to signal
-
-      
+     - Shows position
+     - orientation
+     - last known enemy positions
+     - hydrophone indicators.
 
 
+  Enemy Abilities/Features
+     Weapons:
+       Canons
+       Depth Charge
+       Torpedos?
+       Machine Guns? 
+
+     Detection Techniques:
+       General:
+         Visual
+           - Affected by night? Weather?
+         Radio
+           - Ships can talk to each other in some way
+           - maybe you can see the enemy boats calling for help? Intercept
+             Coms?
+
+           Sonar
+           Hydrophone
+
+        Crew
+          Perform Duties/jobs
+          Repairs
+
+        Hydrophone Implementation
+          Rotating raycast, with diminishing strength?
+          Can lock on to signal
+
+     Technical: 
+        AssetAtlas
+        Where all assets / resources are stored.
+        Giant factory class
+            -Loads images, builds animations
+            -Stores raw values/constants
+
+    Graphics:
+        Ships/Subs
+            Tileset:
+              Hull/Floor
+              Stations (Stations that are larger than 1x1?)
+               - Radio
+               - Command
+               - Engines
+               - Torpedos
+               - Bunk
+
+
+        Crew Members
+        
+        Environment
+            - Ocean Sprites
+            - Water
+            - Seafloor
+            - Fish?

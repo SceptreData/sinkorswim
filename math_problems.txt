@@ -1,0 +1,18 @@
+********************
+*  Sink or Swim    *
+*  Math Challenges *
+********************
+
+Radio/Detection Systems
+    how does hydrophone work?
+    How should an enemy use its detection systems?
+    How smart are the enemies?
+
+    Sonar mechanics
+
+
+Depth Charges
+  How many should enemies use?
+  How accurate should the enemy be?
+  How does the enemy determine a target depth?
+  
