@@ -13,8 +13,8 @@ local Atlas = {}
 Atlas.__index = Atlas
 
 Atlas.actor = {}
+Atlas.boat= {}
 Atlas.prop = {}
-Atlas.ship = {}
 
 
 local function load_LuaAsset(path)

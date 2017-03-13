@@ -1,18 +1,24 @@
 *******************
 *  Sink or Swim   *
-*  To Do          *
+*  Design doc     *
 *******************
 
-Short Term
-**********
-    build gridship. Put sailor on ship.
-      'Boat' Factory?
-        boat initializations
-        Contains Map component.
-        
+Pitch:
 
-Long Term
-*********
+    FTL meets Silent Hunter 3.
+
+    "Pressure, stealth, planning, disasters, explosions"
+     keep your crew alive as you hunt enemy boats.
+
+Core Game Loop:
+    Navigation Phase
+      Intercept enemy boats based on reports.
+        - Shape/Map drawing tools to help?
+
+    Attack Phase - (The good stuff)
+      Positioning, Torpedo Salvo planning, avoiding detection
+      "Stealthily approach targets, fire torpedos
+
 Features:
     
   Sub:

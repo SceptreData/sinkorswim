@@ -72,6 +72,18 @@ function utils.loadJSON(path)
 end
 
 
+function utils.pause(condtion)
+  if not condition then
+    local answer
+    repeat
+      io.write('resume? (y)')
+      io.flush()
+      answer = io.read()
+    until answer == 'y'
+  end
+end
+
+
 -- Math
 
 function utils.degreeToRadian(d)

@@ -14,13 +14,14 @@ Window = require('window')
 
 local Actor = require('actor')
 local Animation = require('animation')
+local Boat = require('boat')
 local Collision = require('collision')
 local Map = require('map')
 local Movement = require('movement')
 local Prop = require('prop')
 
 
-local sailor, green_box, world, _map, path
+local sailor, green_box, world, _map, path, sub
 
 function love.load()
   Window.init()
@@ -28,16 +29,13 @@ function love.load()
   Atlas:add('data/redgreen.json')
   Atlas:add('data/grid_ship.json')
 
-  assert(Atlas.ship.grid_ship.map_data)
+  assert(Atlas.boat.grid_ship.map_data)
 
   world = Game:new()
 
- -- _map = Map:new(strmap, 300, 300, '0')
- -- local foo = _map.grid:getMap()
- -- path, size = _map:getPath(2, 2, 5,2)
-
-
   sailor = Actor('sailor', Window.screen_w/2, Window.screen_h/2)
+  sub = Boat:new('grid_ship')
+  
   world:addEntity(sailor)
 
   --green_box = Prop('debugBox', 1, 300, 300, true)

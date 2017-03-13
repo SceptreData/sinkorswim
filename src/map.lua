@@ -1,18 +1,22 @@
 local Grid = require('lib/jumper.grid')
 local Pathfinder = require('lib/jumper.pathfinder')
-
-
-local Rect = require('rect')
 local Vector = require('vec2')
+  local isVec2 = Vector.isVector
+
+
+local DEFAULT = {
+  pathFunc = function(v) return v ~= '#' end,
+  alg = 'ASTAR'
+}
 
 
 local Map = {}
 
-function Map:new (data, walkable, algorithm)
+function Map:new (map_data, alg, path_func, mode)
   local m = {}
-  m.grid = Grid(data)
-  m.width, m.height = m.grid:getWidth(), m.grid:getHeight()
-  m.pathfinder = Pathfinder (m.grid, walkable or '0', algorithm or 'JPS')
+  m._grid = Grid(map_data)
+  m._pathfinder = Pathfinder(m._grid, alg or DEFAULT.alg, path_func or DEFAULT.pathFunc)
+  if mode then m._pathfinder:setMode(mode) end
 
   self.__index = self 
   return setmetatable(m, self)
@@ -20,10 +24,72 @@ end
 
 
 function Map:getPath(x0, y0, x1, y1)
-  if type(x0) == 'cdata' and type(y0) == 'cdata' then
-    return self.pathfinder:getPath(x0.x, x0.y, y0.x, y0.y)
+  if isVector(x0) and isVector(y0) then
+    x0, y0, x1, y1 = x0.x, x0.y, y0.x, y0.y
   end
-  return self.pathfinder:getPath(x0, y0, x1, y1)
+  return self._pathfinder:getPath(x0, y0, x1, y1)
+end
+
+
+-- TODO: Move this logic somewhere else, movement system?
+function Map:getDirection(origin, target)
+  return (target - prev):normalize()
+end
+
+
+function Map:each(f, ...)
+  for node in self._grid:iter() do
+    f(node, ...)
+  end
+  return self
+end
+
+
+function Map:eachRange(f, x0, y0, x1, y1, ...)
+  if isVec2(x0) and isVec2(y0) then
+    x0, y0, x1, y1 = x0.x, x0.y, y0.x, y0.y
+  end
+
+  for node in self._grid:iter(x0, y0, x1, y1) do
+    f(node, ...)
+  end
+  return self
+end
+
+
+function Map:map(f, ...)
+  for node in self._grid:iter() do
+    node = f(node, ...)
+  end
+  return self
+end
+
+
+function Map:mapRange(x0, y0, x1, y1, f, ...)
+  for node in self._grid:iter(x0,y0,x1,y1) do
+    node = f(node, ...)
+  end
+  return self
+end
+
+
+function Map:getDimensions()
+  return self._grid:getWidth(), self._grid:getHeight()
+end
+
+
+function Map:getWidth()
+  return self._grid:getWidth()
+end
+
+
+function Map:getHeight()
+  return self._grid:getHeight()
+end
+
+
+function Map:getBounds()
+  return self._grid:getBounds()
 end
 
 
