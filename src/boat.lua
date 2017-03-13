@@ -28,5 +28,11 @@ function Boat:new (id, pos )
   self.__index = self
   return setmetatable(b, self)
 end
+
+
+function Boat:add (ent)
+  table.insert(self.crew, ent)
+  ent.location = self
+end
   
 return Boat
