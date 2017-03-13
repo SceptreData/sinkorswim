@@ -68,7 +68,7 @@ function Actor:move (dir, speed)
   self.animation:flag()
 end
 
--- TODO: Re work this into visual component
+-- TODO: Re work this into /visual component
 function Actor:draw()
   if self.drawBox == true then
     local box = Rect(self.position.x, self.position.y, self.box_w, self.box_h)

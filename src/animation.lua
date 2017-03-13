@@ -32,8 +32,7 @@ function Animation.attach(animations)
      end
   end
   a.flipped = false
-  a.changed = true
-  a.cur = a.idle.down
+  a.cur = a.idle.down or nil
   return a
 end
 
@@ -59,18 +58,10 @@ function Animation:set(state, dir)
   end
 end
 
-function Animation:update(state, dir, dt)
-  if self.changed then
-    self:set(state, dir)
-    self.changed = false
-  else
+function Animation:update(dt)
     self.cur:update(dt)
-  end
 end
 
-function Animation:flag()
-  self.changed = true
-end
 
 Animation.system = tiny.processingSystem()
 Animation.system.filter = tiny.requireAll('animation')
