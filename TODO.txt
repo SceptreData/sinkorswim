@@ -9,6 +9,9 @@ Short Term
       'Boat' Factory?
         boat initializations
         Contains Map component.
+
+    Some sort of event system?
+      So Visual component can pick up on alerts.
         
 
 Long Term

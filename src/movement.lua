@@ -32,9 +32,9 @@ local function calculateVelocity (v, r, accel)
   return v:add(dv)
 end
 
+
 Movement.system = tiny.processingSystem()
 Movement.system.filter = tiny.requireAll("position", "velocity", "acceleration")
-
 function Movement.system:process(e, dt)
   local r = e.orientation or Movement[e.dir]
   
