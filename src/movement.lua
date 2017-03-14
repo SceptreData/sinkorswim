@@ -19,12 +19,12 @@ Movement.right = Movement.east
 Movement.down = Movement.south
 Movement.left = Movement.west
 
-function Movement.getDir(dir)
-  if type(dir) == 'number' then
-    return utils.degreeToRadian(dir)
+function Movement.getDir(d)
+  if type(d) == 'number' then
+    return utils.degreeToRadian(d)
   end
 
-  return Movement[dir]
+  return Movement[d]
 end
 
 local function calculateVelocity (v, r, accel)
@@ -32,12 +32,10 @@ local function calculateVelocity (v, r, accel)
   return v:add(dv)
 end
 
-
 Movement.system = tiny.processingSystem()
 Movement.system.filter = tiny.requireAll("position", "velocity", "acceleration")
 function Movement.system:process(e, dt)
   local r = e.orientation or Movement[e.dir]
-  
   e.velocity = calculateVelocity (e.velocity, r, e.acceleration)
 
   local max = e.maxSpeed or 100

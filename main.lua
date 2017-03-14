@@ -1,12 +1,11 @@
 love.filesystem.setRequirePath('?.lua;src/?.lua;')
 
 local anim8 = require('lib/anim8')
-local lume = require('lib/lume')
 local json = require('lib/json')
+local lume = require('lib/lume')
 local tiny = require('lib/tiny')
 
-local fs = love.filesystem
-local lg = love.graphics
+Log = require('lib/log')
 
 Atlas = require('atlas')
 Game = require('game')
@@ -19,6 +18,9 @@ local Collision = require('collision')
 local Map = require('map')
 local Movement = require('movement')
 local Prop = require('prop')
+
+local fs = love.filesystem
+local lg = love.graphics
 
 
 local sailor, green_box, world, _map, path, sub

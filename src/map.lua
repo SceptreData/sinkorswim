@@ -23,6 +23,12 @@ function Map:new (map_data, alg, path_func, mode)
 end
 
 
+function Map:notBlocked (x, y, f)
+  assert(self:inBounds(x, y), "Trying to access out of bounds grid cell")
+  return self._grid:isWalkableAt(x, y, f or DEFAULT.pathFunc)
+end
+
+
 function Map:getPath(x0, y0, x1, y1)
   if isVector(x0) and isVector(y0) then
     x0, y0, x1, y1 = x0.x, x0.y, y0.x, y0.y
@@ -90,6 +96,14 @@ end
 
 function Map:getBounds()
   return self._grid:getBounds()
+end
+
+function Map:inBounds(x, y)
+  if type(x) == 'cdata' then
+    x, y = x.x, x.y
+  end
+  return not (x < 0 or x > self._grid:getWidth
+         or y < 0 or y > self._grid:getHeight)
 end
 
 
