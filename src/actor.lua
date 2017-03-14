@@ -51,7 +51,7 @@ function Actor:setDir(dir)
     dir = utils.degreeToRadian(dir)
   else dir = Movement[dir] end
 
-  self.position:setOri(dir)
+  self.position.ori = dir
   self.animation:flag()
 end
 

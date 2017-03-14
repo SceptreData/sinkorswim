@@ -1,8 +1,9 @@
 -- Movement Systems
 local tiny = require('lib/tiny')
 
-local utils = require('utils')
+local Map = require('map')
 local Vector = require('vec2')
+local utils = require('utils')
 
 local cos, sin = math.cos, math.sin
 
@@ -35,7 +36,7 @@ end
 Movement.system = tiny.processingSystem()
 Movement.system.filter = tiny.requireAll("position", "velocity", "acceleration")
 function Movement.system:process(e, dt)
-  local r = e.orientation or Movement[e.dir]
+  local r = e.position.ori or Movement[e.dir]
   e.velocity = calculateVelocity (e.velocity, r, e.acceleration)
 
   local max = e.maxSpeed or 100
