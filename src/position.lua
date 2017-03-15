@@ -18,6 +18,10 @@ function Position:set(x, y, location)
 end
 
 
+function Position:update(delta)
+  self._local = self._local + delta
+end
+
 function Position:setOri(d)
   assert(type(d) == 'number')
   self.ori = d

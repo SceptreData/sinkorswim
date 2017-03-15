@@ -36,7 +36,7 @@ end
 Movement.system = tiny.processingSystem()
 Movement.system.filter = tiny.requireAll("position", "velocity", "acceleration")
 function Movement.system:process(e, dt)
-  local r = e.position.ori or Movement[e.dir]
+  local r = e.position.ori
   e.velocity = calculateVelocity (e.velocity, r, e.acceleration)
 
   local max = e.maxSpeed or 100
@@ -50,7 +50,7 @@ function Movement.system:process(e, dt)
     e.velocity.y = max * mod
   end
 
-  e.position = e.position + (e.velocity * dt)
+  e.position:update(e.velocity * dt)
 end
   
 return Movement

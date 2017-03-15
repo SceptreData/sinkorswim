@@ -18,6 +18,7 @@ local Collision = require('collision')
 local Map = require('map')
 local Movement = require('movement')
 local Prop = require('prop')
+local Visual = require('visual')
 
 local fs = love.filesystem
 local lg = love.graphics
@@ -33,12 +34,10 @@ function love.load()
 
   assert(Atlas.boat.grid_ship.map_data)
 
-  world = Game:new()
+  Game:new()
 
-  sailor = Actor('sailor', Window.screen_w/2, Window.screen_h/2)
   sub = Boat:new('grid_ship')
-  
-  world:addEntity(sailor)
+  sailor = Actor('sailor')
 
   --green_box = Prop('debugBox', 1, 300, 300, true)
   --world:addEntity(green_box)
@@ -46,7 +45,7 @@ end
 
 
 function love.update(dt)
-  world:update(dt)
+  Game:update(dt)
   -- if Collision.checkBox(sailor, green_box) then
   --   love.window.showMessageBox("Collision!", "Objects have collided!", 'info')
   -- end
@@ -54,8 +53,9 @@ end
 
 function love.draw()
   lg.setColor(255, 255, 255)
-  --green_box:draw()
-  sailor:draw()
+  Visual.system:update()
+  -- green_box:draw()
+  -- sailor:draw()
   -- _map:draw()
   -- _map:drawPath(path)
 end
