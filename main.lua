@@ -39,6 +39,11 @@ function love.load()
   sub = Boat:new('grid_ship')
   sailor = Actor('sailor')
 
+  sub:attach('crew', sailor)
+  sailor:place(2, 2)
+  
+  sub:init(10, 10)
+
   --green_box = Prop('debugBox', 1, 300, 300, true)
   --world:addEntity(green_box)
 end

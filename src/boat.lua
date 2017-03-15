@@ -9,6 +9,7 @@
 --     Visual (Probably should be rendered first?)
 local Position = require('position')
 local Vector = require('vec2')
+local Visual = require('visual')
 local Map = require('map')
 
 local Boat = {}
@@ -23,6 +24,9 @@ function Boat:new (id)
 
   b.map = Map:new(data.map_data)
   b.map._pathfinder:setMode('ORTHOGONAL')
+  b.cell_size = 32
+
+  b.visual = Visual.emptyMap(b.map:getWidth(), b.map:getHeight(), b.cell_size)
 
   b.crew = {}
   b.objs = {}
@@ -33,20 +37,8 @@ function Boat:new (id)
 end
 
 
-function Boat:initAt(x, y, location)
-  self.position:set(x or -1, y or -1, location or nil)
-  Game:add(self)
-  for i = 1, #self.crew do
-    Game:add(self.crew[i])
-  end
-  for i = 1, #self.objs[i] do
-    Game:add(self.objs[i])
-  end
-  self.status = 'active'
-end
-
 -- this function takes a string as first arg.
-function Boat:add (e_type, e)
+function Boat:attach (e_type, e)
   local t = self[e_type]
   assert(t, "trying to add entity to invalid boat container")
   t[#t + 1] = e
@@ -55,6 +47,31 @@ function Boat:add (e_type, e)
   if self.status == 'active' then
     Game:add(e)
   end
+end
+
+
+function Boat:init(x, y, location)
+  self.position:set(x or -1, y or -1, location or nil)
+  Game:add(self)
+  for i = 1, #self.objs do
+    Game:add(self.objs[i])
+  end
+  for i = 1, #self.crew do
+    Game:add(self.crew[i])
+  end
+  self.status = 'active'
+end
+
+
+function Boat:getHomeless()
+  local shelter = {}
+  for i = 1, #self.crew do
+    local bum = self.crew[i]
+    if not bum.position:isActive() then
+      shelter[#shelter + 1] = bum
+    end
+  end
+  return shelter
 end
 
 

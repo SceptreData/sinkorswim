@@ -8,27 +8,35 @@ local Visual = {}
 Visual.__index = Visual
 
 local DEBUG_drawBox = true
-
+local DEFAULT_TILE_SIZE = 32
 
 local function drawAnimatedSprite(v, x, y)
   v.animation.cur:draw(v.img, x, y)
 end
 
+local function drawEmpty(x, y)
+  return
+end
 
 local function basic_getPos(e)
   return e.position._local
 end
 
-local function actual_getPos(e)
+local function relative_getPos(e)
   return e.position:getActual()
 end
 
+local function actual_getPos(e)
+  return e.position:getActual() * DEFAULT_TILE_SIZE
+end
+
+
 local POSITION_FUNC_T = {
   basic  = basic_getPos,
+  relative = relative_getPos,
   actual = actual_getPos
 }
 
-local DEFAULT_TILE_SIZE = 32
 local DEFAULT_DRAW_FUNC = drawAnimatedSprite
 local DEFAULT_POS_FUNC  = basic_getPos
 
@@ -50,6 +58,16 @@ function Visual.animatedSprite (img, anim_data, spr_w, spr_h, draw_func, pos_fun
   --v.registered_events = {}
   v._dirty = false
 
+  return v
+end
+
+function Visual.emptyMap (w, h, tile_size)
+  local v = setmetatable({}, Visual)
+  v._cat = 'map'
+  v._drawFunc = drawEmpty
+  v._posFunc = actual_getPos
+
+  v.spr_w, v.spr_h = 32, 32
   return v
 end
 
@@ -97,19 +115,26 @@ local function drawBox(x, y, w, h)
   box:drawBorder()
 end
 
+local function drawMapNode(node, map_x, map_y)
+  drawBox(map_x + ((node:getX() - 1) * 32), map_y + ((node:getY() - 1) * 32), 32, 32)
+end
+
 function Visual:draw(e)
   local pos = self._posFunc(e)
-  if DEBUG_drawBox then drawBox(pos.x, pos.y, self.spr_w, self.spr_h) end
+  if self._cat == 'map' then
+    e.map:each(drawMapNode, pos.x, pos.y)
+  else
+    self:_drawFunc(pos.x, pos.y)
+  end
 
-  self:_drawFunc(pos.x, pos.y)
+  if DEBUG_drawBox then drawBox(pos.x, pos.y, self.spr_w, self.spr_h) end
 end
    
 
 Visual.system = tiny.processingSystem()
 Visual.system.filter = tiny.requireAll("visual", "position")
 function Visual.system:process(e)
-  local v = e.visual
-  v:draw(e)
+  e.visual:draw(e)
 end
 
 return Visual

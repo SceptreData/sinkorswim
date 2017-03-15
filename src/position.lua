@@ -36,13 +36,16 @@ function Position:setLocation(parent)
   self.location = parent
 end
 
+
 function Position:getParent()
   return self.location
 end
 
+
 function Position:getParentPos()
   return self.location.position
 end
+
 
 function Position:getActual(max)
   local pos = self._local:clone()
@@ -57,6 +60,11 @@ function Position:getActual(max)
   end
 
   return pos
+end
+
+
+function Position:isActive()
+  return self._local == Vector(-1, -1)
 end
 
 setmetatable(Position, {__call = function(_, ...) return Position.new(...) end})

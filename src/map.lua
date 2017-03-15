@@ -23,7 +23,7 @@ function Map:new (map_data, alg, path_func, mode)
 end
 
 
-function Map:notBlocked (x, y, f)
+function Map:notBlockedAt (x, y, f)
   assert(self:inBounds(x, y), "Trying to access out of bounds grid cell")
   return self._grid:isWalkableAt(x, y, f or DEFAULT.pathFunc)
 end

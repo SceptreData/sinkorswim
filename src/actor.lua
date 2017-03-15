@@ -41,7 +41,7 @@ function Actor:place(x, y, location)
   local map = target.map
 
   if map then
-    assert(map:notBlockedAt(x, y), "Trying to place actorID: %s in Blocked cell.", self.id)
+    assert(map:notBlockedAt(x, y))
   end
     
   self.position:set(x, y, location or nil)
