@@ -102,8 +102,8 @@ function Map:inBounds(x, y)
   if type(x) == 'cdata' then
     x, y = x.x, x.y
   end
-  return not (x < 0 or x > self._grid:getWidth
-         or y < 0 or y > self._grid:getHeight)
+  return not (x < 0 or x > self._grid:getWidth()
+         or y < 0 or y > self._grid:getHeight())
 end
 
 

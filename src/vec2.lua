@@ -32,7 +32,7 @@ function Vec2.new(x, y)
     end
 end
 
-function Vec2:clone(v)
+function Vec2.clone(v)
     return new(self.x, self.y)
 end
 

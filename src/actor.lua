@@ -22,6 +22,8 @@ function Actor.new(id)
   a.id = id
 
   a.visual = Visual.animatedSprite(data.img, data.anim, data.sw, data.sh)
+  a.visual:setPosFunc('actual')
+
   a.position =  Position()
   a.velocity = Vector(0, 0)
   a.acceleration = 0

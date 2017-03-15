@@ -41,7 +41,7 @@ function Position:getParentPos()
 end
 
 function Position:getActual(max)
-  local pos = self._local
+  local pos = self._local:clone()
   local parent = self.location
 
   local cur_lvl = 1

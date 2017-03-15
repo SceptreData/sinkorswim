@@ -1,3 +1,5 @@
+local tiny = require('lib/tiny')
+
 local Animation = require('animation')
 local Rect = require('rect')
 local Vector = require('vec2')
@@ -14,9 +16,17 @@ end
 
 
 local function basic_getPos(e)
-  return e.position.x, e.position.y
+  return e.position._local
 end
 
+local function actual_getPos(e)
+  return e.position:getActual()
+end
+
+local POSITION_FUNC_T = {
+  basic  = basic_getPos,
+  actual = actual_getPos
+}
 
 local DEFAULT_TILE_SIZE = 32
 local DEFAULT_DRAW_FUNC = drawAnimatedSprite
@@ -26,6 +36,10 @@ function Visual.animatedSprite (img, anim_data, spr_w, spr_h, draw_func, pos_fun
   local v = setmetatable({}, Visual) 
   v._cat = 'animated_sprite'
   v._drawFunc =  draw_func or DEFAULT_DRAW_FUNC
+
+  if type(pos_func) == 'string' then
+    pos_func = POSITION_FUNC_T[pos_func]
+  end
   v._posFunc = pos_func or DEFAULT_POS_FUNC
 
   v.img = img
@@ -56,6 +70,9 @@ end
 
 
 function Visual:setPosFunc(f)
+  if type(f) == 'string' then
+    f = POSITION_FUNC_T[f]
+  end
   self._posFunc = f
 end
   
@@ -66,7 +83,7 @@ end
 
 function Visual:update(e, dt)
   if self._dirty then
-    local super, sub = e[self._map[1], self._map[2]]
+    local super, sub = self._map[1], self._map[2]
     self.animation:set(super, sub)
     self._dirty = false
   end
@@ -81,16 +98,18 @@ local function drawBox(x, y, w, h)
 end
 
 function Visual:draw(e)
-  local x, y = self:getPosition(e)
-  if DEBUG_drawBox then drawBox(x, y, self.spr_w, self.spr_h) end
+  local pos = self._posFunc(e)
+  if DEBUG_drawBox then drawBox(pos.x, pos.y, self.spr_w, self.spr_h) end
 
-  self:_drawFunc(x, y)
+  self:_drawFunc(pos.x, pos.y)
 end
    
 
 Visual.system = tiny.processingSystem()
-Visual.system.filter = tiny.requireAll("visual", "position", "location")
-function Visual.system:process(e, dt)
-
+Visual.system.filter = tiny.requireAll("visual", "position")
+function Visual.system:process(e)
+  local v = e.visual
+  v:draw(e)
 end
 
+return Visual
