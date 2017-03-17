@@ -1,11 +1,11 @@
 local tiny = require('lib/tiny')
 
 local Animation = require('component.animation')
-local Draw = require('draw')
-local Camera = require('camera')
-local Position = require('component.position')
-local Rect = require('geometry.rect')
-local Vector = require('math.vec2')
+local Draw      = require('draw')
+local Camera    = require('camera')
+local Position  = require('component.position')
+local Rect      = require('geometry.rect')
+local Vector    = require('math.vec2')
 
 local lg = love.graphics
 
@@ -20,12 +20,12 @@ local DEFAULT_POS_FUNC  = Position.func_t['actual']
 
 local function new(v_data)
   local v = setmetatable({}, Visual)
-  v._cat =  v_data.id
-  v.img = v_data.img or nil
+  v._cat  =  v_data.id
+  v.img   = v_data.img or nil
   v.spr_w, v.spr_h = v_data.w, v_data.h
 
   v._drawFunc = Draw[v_data.id]
-  v._posFunc = v_data.posFunc or DEFAULT_POS_FUNC
+  v._posFunc  = v_data.posFunc or DEFAULT_POS_FUNC
 
   if v_data.anim then
     v.animation = Animation.attach(v_data.anim)
@@ -76,7 +76,7 @@ end
 
 
 function Visual:draw(e, camera)
-  local world_pos = self._posFunc(e)
+  local world_pos  = self._posFunc(e)
   local screen_pos = camera:translate(world_pos) 
 
   if self._cat == 'map' then

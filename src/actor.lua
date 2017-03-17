@@ -1,15 +1,15 @@
 -- Actor factory
 local Animation = require('component.animation')
 local Collision = require('component.collision')
-local Visual = require('component.visual')
+local Visual    = require('component.visual')
 
 local Movement = require('movement')
 local Position = require('component.position')
-local Map = require('component.map')
+local Map      = require('component.map')
 
-local Rect = require('geometry.rect')
+local Rect   = require('geometry.rect')
 local Vector = require('math.vec2')
-local utils = require('utils')
+local utils  = require('utils')
 
 local Actor = {}
 Actor.__index = Actor
@@ -20,19 +20,19 @@ function Actor.new(id)
 
   local a = setmetatable({}, Actor)
   a.id = id
-  a.position =  Position()
+  a.position = Position()
   a.velocity = Vector(0, 0)
   a.acceleration = 0
-  a.is_solid = true
+  a.is_solid  = true
 
   a.state = 'inactive'
   a.maxSpeed = 100
 
   a.visual = Visual({
-    id = 'animatedSprite',
-    img = data.img,
-    w = data.sw,
-    h = data.sh,
+    id   = 'animatedSprite',
+    img  = data.img,
+    w    = data.sw,
+    h    = data.sh,
     anim = data.anim,
   })
   

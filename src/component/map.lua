@@ -1,8 +1,9 @@
-local Grid = require('lib/jumper.grid')
+local Grid       = require('lib/jumper.grid')
 local Pathfinder = require('lib/jumper.pathfinder')
-local Vector = require('math.vec2')
-  local isVec2 = Vector.isVector
+local Vector     = require('math.vec2')
 
+
+local isVec2  = Vector.isVector
 
 local DEFAULT = {
   pathFunc = function(v) return v ~= '#' end,

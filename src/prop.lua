@@ -1,7 +1,8 @@
 -- Prop Factory
 local Position = require('component.position')
-local Vector = require('math.vec2')
-local Visual = require('component.visual')
+local Vector   = require('math.vec2')
+local Visual   = require('component.visual')
+
 local Prop = {}
 Prop.__index = Prop
 
@@ -14,11 +15,11 @@ function Prop.new(id, frame_idx, is_solid)
   p.box_w, p.box_h = data.sw, data.sh
 
   p.visual = Visual({
-    id = 'static',
+    id  = 'static',
     img = data.img,
     sprite_frame = data.frames[frame_idx],
-    w = data.sw,
-    h = data.sh
+    w   = data.sw,
+    h   = data.sh
   })
   p.is_solid = is_solid or false
 

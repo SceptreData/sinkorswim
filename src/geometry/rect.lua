@@ -1,5 +1,5 @@
 --  Rectangle Functions
-local ffi = require('ffi')
+local ffi    = require('ffi')
 local Vector = require('math.vec2')
 
 local lg = love.graphics

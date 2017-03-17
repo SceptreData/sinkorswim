@@ -1,21 +1,21 @@
-local tiny = require('lib/tiny')
+local tiny      = require('lib/tiny')
 
 local Animation = require('component.animation')
-local Movement = require('movement')
-local Visual = require('component.visual')
+local Movement  = require('movement')
+local Visual    = require('component.visual')
 
-local Camera = require('camera')
-local Viewport = require('viewport')
+local Camera    = require('camera')
+local Viewport  = require('viewport')
 
 local Game = {}
 Game.__index = Game
 
 Game.world = 0
-Game.cam = 0
+Game.cam   = 0
 
 local start_time = 0
-local num_ticks = 0
-local num_ents = 0
+local num_ticks  = 0
+local num_ents   = 0
 
 function Game:new()
   start_time = love.timer.getTime()

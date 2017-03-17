@@ -1,6 +1,6 @@
 -- Animation Component
 local anim8 = require('lib/anim8')
-local tiny = require('lib/tiny')
+local tiny  = require('lib/tiny')
 
 local Animation = {}
 Animation.__index = Animation

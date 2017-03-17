@@ -9,8 +9,8 @@ local utils = {}
 local fs = love.filesystem
 
 -- Lua
-local pairs = pairs
-local type = type
+local pairs  = pairs
+local type   = type
 local assert = assert
 
 -- Math

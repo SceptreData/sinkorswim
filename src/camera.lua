@@ -1,10 +1,10 @@
-local lume = require('lib/lume')
+local lume     = require('lib/lume')
 
 local Position = require('component.position')
-local Rect = require('geometry.rect')
-local Vector = require('math.vec2')
+local Rect     = require('geometry.rect')
+local Vector   = require('math.vec2')
 
-local Camera = {}
+local Camera   = {}
 Camera.__index = Camera
 
 local DEFAULT_TILE_SIZE = 32
@@ -12,9 +12,9 @@ local DEFAULT_TILE_SIZE = 32
 -- x, y coordinates
 local function new(x, y, location, viewport)
   local c = setmetatable({}, Camera)
-  c.pos = Position(x or 0, y or 0, location or nil)
-  c.rot = 0
-  c.zoom = 1
+  c.pos   = Position(x or 0, y or 0, location or nil)
+  c.rot   = 0
+  c.zoom  = 1
   c.viewport = viewport or nil
   return c
 end

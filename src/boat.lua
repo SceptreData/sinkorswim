@@ -1,16 +1,7 @@
--- Ship
---     Layout?
---     Defaults?
---     Resources
--- *   Map
--- *   Movement
--- *   location
---     Status
---     Visual (Probably should be rendered first?)
 local Position = require('component.position')
-local Vector = require('math.vec2')
-local Visual = require('component.visual')
-local Map = require('component.map')
+local Vector   = require('math.vec2')
+local Visual   = require('component.visual')
+local Map      = require('component.map')
 
 local Boat = {}
 

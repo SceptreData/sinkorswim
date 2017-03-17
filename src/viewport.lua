@@ -1,4 +1,4 @@
-local Rect = require('geometry.rect')
+local Rect     = require('geometry.rect')
 local Position = require('component.position')
 
 local lg = love.graphics
@@ -10,8 +10,8 @@ local function new(x, y, w, h, parent)
   local vp = setmetatable({}, Viewport)
   -- Add checks for screen bounds
   vp.position = Position(x or 0, y or 0, parent or nil)
-  vp.width = w or lg.getWidth()
-  vp.height = h or lg.getHeight()
+  vp.width    = w or lg.getWidth()
+  vp.height   = h or lg.getHeight()
 
   vp.target = target or nil
   return vp

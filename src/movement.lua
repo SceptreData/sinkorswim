@@ -1,9 +1,9 @@
 -- Movement Systems
-local tiny = require('lib/tiny')
+local tiny   = require('lib/tiny')
 
-local Map = require('component.map')
+local Map    = require('component.map')
 local Vector = require('math.vec2')
-local utils = require('utils')
+local utils  = require('utils')
 
 local cos, sin = math.cos, math.sin
 
@@ -11,14 +11,14 @@ local Movement = {}
 Movement.__index = Movement
 
 Movement.north = utils.degreeToRadian(180)
-Movement.east =  utils.degreeToRadian(90)
+Movement.east  = utils.degreeToRadian(90)
 Movement.south = utils.degreeToRadian(0)
-Movement.west = utils.degreeToRadian(270)
+Movement.west  = utils.degreeToRadian(270)
 
-Movement.up = Movement.north
+Movement.up    = Movement.north
 Movement.right = Movement.east
-Movement.down = Movement.south
-Movement.left = Movement.west
+Movement.down  = Movement.south
+Movement.left  = Movement.west
 
 function Movement.getDir(d)
   if type(d) == 'number' then
