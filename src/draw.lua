@@ -15,7 +15,7 @@ function Draw.static(v, x, y)
   lg.draw(v.img, v.sprite, x, y)
 end
 
-function Draw.empty(x, y)
+function Draw.map(x, y)
   return
 end
 

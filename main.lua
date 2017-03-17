@@ -28,11 +28,10 @@ local sailor, green_box, world, _map, path, sub
 
 function love.load()
   Window:init()
+
   Atlas:add('data/sailor.json')
   Atlas:add('data/redgreen.json')
   Atlas:add('data/grid_ship.json')
-
-  assert(Atlas.boat.grid_ship.map_data)
 
   Game:new()
 
@@ -50,12 +49,11 @@ function love.load()
 
 end
 
-
+-- TODO
+-- Collison Checking
+-- Reimplmenting Animations
 function love.update(dt)
   Game:update(dt)
-  -- if Collision.checkBox(sailor, green_box) then
-  --   love.window.showMessageBox("Collision!", "Objects have collided!", 'info')
-  -- end
 end
 
 function love.draw()
@@ -67,11 +65,12 @@ function love.keypressed(k)
   if k == 'escape' then
     love.event.quit()
   end
-  if k == 'left' then sailor:move('left', 10)
-  elseif k == 'right' then sailor:move('right', 10)
-  elseif k == 'up' then sailor:move('up', 10)
-  elseif k == 'down' then sailor:move('down', 10)
-  elseif k == 'u' then sailor:changeState('working')
-  elseif k == 'w' then sailor:changeState('walking')
-  end
 end
+
+--   if k == 'left' then sailor:move('left', 10)
+--   elseif k == 'right' then sailor:move('right', 10)
+--   elseif k == 'up' then sailor:move('up', 10)
+--   elseif k == 'down' then sailor:move('down', 10)
+--   elseif k == 'u' then sailor:changeState('working')
+--   elseif k == 'w' then sailor:changeState('walking')
+--   end

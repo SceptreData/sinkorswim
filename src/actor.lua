@@ -20,10 +20,6 @@ function Actor.new(id)
 
   local a = setmetatable({}, Actor)
   a.id = id
-
-  a.visual = Visual.animatedSprite(data.img, data.anim, data.sw, data.sh)
-  a.visual:setPosFunc('actual')
-
   a.position =  Position()
   a.velocity = Vector(0, 0)
   a.acceleration = 0
@@ -32,6 +28,14 @@ function Actor.new(id)
   a.state = 'inactive'
   a.maxSpeed = 100
 
+  a.visual = Visual({
+    id = 'animatedSprite',
+    img = data.img,
+    w = data.sw,
+    h = data.sh,
+    anim = data.anim,
+  })
+  
   return a
 end
 

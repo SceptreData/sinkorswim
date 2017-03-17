@@ -11,10 +11,15 @@ function Prop.new(id, frame_idx, is_solid)
   local p = setmetatable({}, Prop)
   p.id = id
   p.position = Position()
-  p.visual = Visual.prop(data.img, data.frames[frame_idx], data.sw, data.sh)
-  p.visual:setPosFunc('actual')
   p.box_w, p.box_h = data.sw, data.sh
 
+  p.visual = Visual({
+    id = 'static',
+    img = data.img,
+    sprite_frame = data.frames[frame_idx],
+    w = data.sw,
+    h = data.sh
+  })
   p.is_solid = is_solid or false
 
   return p

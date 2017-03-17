@@ -24,6 +24,7 @@ function Camera:goTo(x, y)
   self.pos:set(x, y)
 end
 
+
 function Camera:lookAt(ent)
   local pos = ent.position:getActual()
   if ent.width then
@@ -59,6 +60,7 @@ function Camera:translate(pos)
   return view_pos + offset:scale(DEFAULT_TILE_SIZE * self.zoom)
 end
 
+
 function Camera:canSeePoint(x, y)
   local w, h = self:getDimensions()
   local x_off = math.ceil(w / 2)
@@ -72,16 +74,18 @@ function Camera:canSeePoint(x, y)
   return (x >= x_min and x <= x_max and y >= y_min and y <= y_max)
 end
 
+
 function Camera:canSeeRange(x, y, w, h)
   local obj_rect = Rect(x, y, w, h)
 
   local cam_w, cam_h = self:getDimensions()
   local cam_rect = Rect(self.pos:getX() - math.ceil(cam_w / 2), 
                         self.pos:getY()   - math.ceil(cam_h /2), 
-                        cam_w, cam_h)
-  
+                        cam_w, cam_h
+                       )
   return obj_rect:intersects(cam_rect)
 end
+
 
 function Camera:canSee(e)
   local x, y = e.position:getX(), e.position:getY()
@@ -91,6 +95,7 @@ function Camera:canSee(e)
 
   return self:canSeePoint(x, y)
 end
+
 
 setmetatable(Camera, {__call = function(_, ...) return new(...) end})
 

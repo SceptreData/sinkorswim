@@ -27,7 +27,11 @@ function Boat:new (id)
   b.cell_size = 32
   b.width, b.height = b.map:getWidth(), b.map:getHeight()
 
-  b.visual = Visual.emptyMap(b.width, b.height, b.cell_size)
+  b.visual = Visual({
+    id = 'map', 
+    w = cell_size,
+    h = cell_size
+  })
 
   b.crew = {}
   b.objects = {}

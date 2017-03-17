@@ -18,50 +18,21 @@ local DEFAULT_TILE_SIZE = 32
 local DEFAULT_DRAW_FUNC = Draw.animatedSprite
 local DEFAULT_POS_FUNC  = Position.func_t['actual']
 
+local function new(v_data)
+  local v = setmetatable({}, Visual)
+  v._cat =  v_data.id
+  v.img = v_data.img or nil
+  v.spr_w, v.spr_h = v_data.w, v_data.h
 
-function Visual.animatedSprite (img, anim_data, spr_w, spr_h, draw_func, pos_func)
-  local v = setmetatable({}, Visual) 
-  v._cat = 'animated_sprite'
-  v._drawFunc = Draw.animatedSprite
+  v._drawFunc = Draw[v_data.id]
+  v._posFunc = v_data.posFunc or DEFAULT_POS_FUNC
 
-  if type(pos_func) == 'string' then
-    pos_func = Position.func_t[pos_func]
+  if v_data.anim then
+    v.animation = Animation.attach(v_data.anim)
   end
-  v._posFunc = pos_func or DEFAULT_POS_FUNC
+  v.sprite = v_data.sprite_frame or nil
 
-  v.img = img
-  v.spr_w, v.spr_h = spr_w or DEFAULT_TILE_SIZE, spr_h or DEFAULT_TILE_SIZE
-  v.animation = Animation.attach(anim_data)
-
-  v._map = {}
-  --v.registered_events = {}
   v._dirty = false
-
-  return v
-end
-
-
-function Visual.prop(img, sprite, w, h)
-  local v = setmetatable({}, Visual)
-  v._cat = 'prop'
-  v._drawFunc = Draw.static
-  v._posFunc = DEFAULT_POS_FUNC
-  v.img = img
-  v.sprite =  sprite
-  v.spr_w, v.spr_h = w or DEFAULT_TILE_SIZE, h or DEFAULT_TILE_SIZE
-  v._dirty = false
-
-  return v
-end
-
-
-function Visual.emptyMap (w, h, tile_size)
-  local v = setmetatable({}, Visual)
-  v._cat = 'map'
-  v._drawFunc = Draw.empty
-  v._posFunc = Position.func_t['actual']
-
-  v.spr_w, v.spr_h = 32, 32
   return v
 end
 
@@ -124,5 +95,7 @@ function Visual.system:process(e)
     e.visual:draw(e, Game.cam)
   end
 end
+
+setmetatable(Visual, {__call = function(_, ...) return new(...) end})
 
 return Visual

@@ -25,10 +25,9 @@ function Game:new()
   self.cam = Camera(0, 0, nil, Window.viewport)
 end
 
-
+-- Need to reimplement ANimation system somehow
 function Game:initSystems()
   self.world:addSystem(Movement.system)
-  self.world:addSystem(Animation.system)
 
   self.world:addSystem(Visual.system)
   Visual.system.active = false

@@ -1,5 +1,6 @@
 Last time, on SINK OR SWIM:
-    I got the program to boot again, still havent tried to 
-    add a boat/draw its occupants.
-    
-    Next: figuring out how to draw again.
+   Cameras, viewports, reimplemented pros etc.
+   big commit 
+
+NEXT:
+    Reimplement Animations?
