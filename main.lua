@@ -27,7 +27,7 @@ local lg = love.graphics
 local sailor, green_box, world, _map, path, sub
 
 function love.load()
-  Window.init()
+  Window:init()
   Atlas:add('data/sailor.json')
   Atlas:add('data/redgreen.json')
   Atlas:add('data/grid_ship.json')
@@ -38,13 +38,17 @@ function love.load()
 
   sub = Boat:new('grid_ship')
   sailor = Actor('sailor')
+  green_box = Prop('debugBox', 2, true)
 
   sub:attach('crew', sailor)
+  sub:attach('objects', green_box)
   sailor:place(2, 2)
+  green_box:place(3, 3)
   
   sub:init(10, 10)
+  Game.cam:lookAt(sub)
+  print(Game.cam.pos:get())
 
-  --green_box = Prop('debugBox', 1, 300, 300, true)
   --world:addEntity(green_box)
 end
 

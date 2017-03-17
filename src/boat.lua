@@ -25,11 +25,12 @@ function Boat:new (id)
   b.map = Map:new(data.map_data)
   b.map._pathfinder:setMode('ORTHOGONAL')
   b.cell_size = 32
+  b.width, b.height = b.map:getWidth(), b.map:getHeight()
 
-  b.visual = Visual.emptyMap(b.map:getWidth(), b.map:getHeight(), b.cell_size)
+  b.visual = Visual.emptyMap(b.width, b.height, b.cell_size)
 
   b.crew = {}
-  b.objs = {}
+  b.objects = {}
   b.status = 'pre_init'
 
   self.__index = self
@@ -53,8 +54,8 @@ end
 function Boat:init(x, y, location)
   self.position:set(x or -1, y or -1, location or nil)
   Game:add(self)
-  for i = 1, #self.objs do
-    Game:add(self.objs[i])
+  for i = 1, #self.objects do
+    Game:add(self.objects[i])
   end
   for i = 1, #self.crew do
     Game:add(self.crew[i])

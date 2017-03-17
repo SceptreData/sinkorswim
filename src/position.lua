@@ -17,6 +17,21 @@ function Position:set(x, y, location)
   if location then self.location = location end
 end
 
+function Position:move(dx, dy)
+  self._local = self._local + Vector(dx, dy)
+end
+
+function Position:getX()
+  return self._local.x
+end
+
+function Position:getY()
+  return self._local.y
+end
+
+function Position:get()
+  return self._local:clone()
+end
 
 function Position:update(delta)
   self._local = self._local + delta
@@ -36,14 +51,23 @@ function Position:setLocation(parent)
   self.location = parent
 end
 
-
-function Position:getParent()
-  return self.location
+function Position:hasParent()
+  return self.location ~= nil or 'screen'
 end
 
 
 function Position:getParentPos()
   return self.location.position
+end
+
+function Position:getRoot()
+  local parent = self:getParentPos()
+  repeat 
+    if not parent.location then
+      return parent
+    end
+    parent = parent:getParentPos()
+  until not parent
 end
 
 

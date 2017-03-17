@@ -4,20 +4,25 @@ local Animation = require('animation')
 local Movement = require('movement')
 local Visual = require('visual')
 
+local Camera = require('camera')
+local Viewport = require('viewport')
+
 local Game = {}
 Game.__index = Game
 
 Game.world = 0
+Game.cam = 0
 
 local start_time = 0
 local num_ticks = 0
 local num_ents = 0
 
-
 function Game:new()
   start_time = love.timer.getTime()
   self.world = tiny.world()
   self:initSystems()
+
+  self.cam = Camera(0, 0, nil, Window.viewport)
 end
 
 
