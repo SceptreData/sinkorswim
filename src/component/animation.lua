@@ -64,7 +64,7 @@ end
 
 
 Animation.system = tiny.processingSystem()
-Animation.system.filter = tiny.requireAll('animation')
+Animation.system.filter = tiny.requireAll('component.animation')
 function Animation.system:process(e, dt)
   e.animation:update(e.state, e.dir, dt)
 end

@@ -1,6 +1,6 @@
 local lume = require('lib/lume')
 
-local Position = require('position')
+local Position = require('component.position')
 local Rect = require('geometry.rect')
 local Vector = require('math.vec2')
 

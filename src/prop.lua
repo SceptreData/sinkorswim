@@ -1,7 +1,7 @@
 -- Prop Factory
-local Position = require('position')
+local Position = require('component.position')
 local Vector = require('math.vec2')
-local Visual = require('visual')
+local Visual = require('component.visual')
 local Prop = {}
 Prop.__index = Prop
 

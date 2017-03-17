@@ -1,7 +1,7 @@
 -- Movement Systems
 local tiny = require('lib/tiny')
 
-local Map = require('map')
+local Map = require('component.map')
 local Vector = require('math.vec2')
 local utils = require('utils')
 

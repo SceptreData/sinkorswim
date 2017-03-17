@@ -1,9 +1,9 @@
 local tiny = require('lib/tiny')
 
-local Animation = require('animation')
+local Animation = require('component.animation')
 local Draw = require('draw')
 local Camera = require('camera')
-local Position = require('position')
+local Position = require('component.position')
 local Rect = require('geometry.rect')
 local Vector = require('math.vec2')
 

@@ -7,10 +7,10 @@
 -- *   location
 --     Status
 --     Visual (Probably should be rendered first?)
-local Position = require('position')
+local Position = require('component.position')
 local Vector = require('math.vec2')
-local Visual = require('visual')
-local Map = require('map')
+local Visual = require('component.visual')
+local Map = require('component.map')
 
 local Boat = {}
 

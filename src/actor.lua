@@ -1,11 +1,11 @@
 -- Actor factory
-local Animation = require('animation')
-local Collision = require('collision')
-local Visual = require('visual')
+local Animation = require('component.animation')
+local Collision = require('component.collision')
+local Visual = require('component.visual')
 
 local Movement = require('movement')
-local Position = require('position')
-local Map = require('map')
+local Position = require('component.position')
+local Map = require('component.map')
 
 local Rect = require('geometry.rect')
 local Vector = require('math.vec2')

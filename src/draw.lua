@@ -1,4 +1,4 @@
-local Animation = require('animation')
+local Animation = require('component.animation')
 local Vector = require('math.vec2')
 local Rect = require('geometry.rect')
 

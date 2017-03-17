@@ -2,7 +2,7 @@ local lume = require('lib/lume')
 local json = require('lib/json')
 local anim8 = require('lib/anim8')
 
-local Animation = require('animation')
+local Animation = require('component.animation')
 local utils = require('utils')
 
 local lg = love.graphics

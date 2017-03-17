@@ -1,8 +1,8 @@
 local tiny = require('lib/tiny')
 
-local Animation = require('animation')
+local Animation = require('component.animation')
 local Movement = require('movement')
-local Visual = require('visual')
+local Visual = require('component.visual')
 
 local Camera = require('camera')
 local Viewport = require('viewport')

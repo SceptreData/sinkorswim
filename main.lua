@@ -7,18 +7,19 @@ local tiny = require('lib/tiny')
 
 Log = require('lib/log')
 
-Atlas = require('atlas')
-Game = require('game')
+Atlas  = require('atlas')
+Game   = require('game')
 Window = require('window')
 
-local Actor = require('actor')
-local Animation = require('animation')
-local Boat = require('boat')
-local Collision = require('collision')
-local Map = require('map')
+local Actor    = require('actor')
+local Boat     = require('boat')
 local Movement = require('movement')
-local Prop = require('prop')
-local Visual = require('visual')
+local Prop     = require('prop')
+
+local Animation = require('component.animation')
+local Collision = require('component.collision')
+local Map       = require('component.map')
+local Visual    = require('component.visual')
 
 local fs = love.filesystem
 local lg = love.graphics
