@@ -1,6 +1,6 @@
 local Animation = require('animation')
-local Vector = require('vec2')
-local Rect = require('rect')
+local Vector = require('math.vec2')
+local Rect = require('geometry.rect')
 
 local lg = love.graphics
 

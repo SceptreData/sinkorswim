@@ -1,6 +1,6 @@
 local Grid = require('lib/jumper.grid')
 local Pathfinder = require('lib/jumper.pathfinder')
-local Vector = require('vec2')
+local Vector = require('math.vec2')
   local isVec2 = Vector.isVector
 
 

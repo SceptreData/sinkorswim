@@ -1,4 +1,4 @@
-local Vector = require('vec2')
+local Vector = require('math.vec2')
 
 local Position = {}
 Position.__index = Position

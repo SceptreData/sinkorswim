@@ -1,8 +1,8 @@
 local lume = require('lib/lume')
 
 local Position = require('position')
-local Rect = require('rect')
-local Vector = require('vec2')
+local Rect = require('geometry.rect')
+local Vector = require('math.vec2')
 
 local Camera = {}
 Camera.__index = Camera

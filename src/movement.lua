@@ -2,7 +2,7 @@
 local tiny = require('lib/tiny')
 
 local Map = require('map')
-local Vector = require('vec2')
+local Vector = require('math.vec2')
 local utils = require('utils')
 
 local cos, sin = math.cos, math.sin

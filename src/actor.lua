@@ -7,8 +7,8 @@ local Movement = require('movement')
 local Position = require('position')
 local Map = require('map')
 
-local Rect = require('rect')
-local Vector = require('vec2')
+local Rect = require('geometry.rect')
+local Vector = require('math.vec2')
 local utils = require('utils')
 
 local Actor = {}

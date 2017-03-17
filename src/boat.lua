@@ -8,7 +8,7 @@
 --     Status
 --     Visual (Probably should be rendered first?)
 local Position = require('position')
-local Vector = require('vec2')
+local Vector = require('math.vec2')
 local Visual = require('visual')
 local Map = require('map')
 

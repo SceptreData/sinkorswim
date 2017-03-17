@@ -1,4 +1,4 @@
-local Rect = require('rect')
+local Rect = require('geometry.rect')
 local Position = require('position')
 
 local lg = love.graphics

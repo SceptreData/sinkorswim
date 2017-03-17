@@ -1,6 +1,6 @@
 local tiny = require('lib/tiny')
 
-local Rect = require('rect')
+local Rect = require('geometry.rect')
 
 local Collision = {}
 Collision.__index = Collision

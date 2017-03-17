@@ -4,8 +4,8 @@ local Animation = require('animation')
 local Draw = require('draw')
 local Camera = require('camera')
 local Position = require('position')
-local Rect = require('rect')
-local Vector = require('vec2')
+local Rect = require('geometry.rect')
+local Vector = require('math.vec2')
 
 local lg = love.graphics
 
