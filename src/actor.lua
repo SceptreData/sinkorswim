@@ -92,14 +92,6 @@ function Actor:move (dir, speed)
   self.animation:flag()
 end
 
--- TODO: Re work this into /visual component
--- function Actor:draw()
---   if self.drawBox == true then
---     local box = Rect(self.position.x, self.position.y, self.box_w, self.box_h)
---     box:drawBorder()
---   end
---   self.animation.cur:draw(self.img, self.position.x, self.position.y)
--- end
 
 setmetatable(Actor, {__call = function(_, ...) return Actor.new(...) end})
 

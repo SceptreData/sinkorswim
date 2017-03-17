@@ -47,9 +47,7 @@ function love.load()
   
   sub:init(10, 10)
   Game.cam:lookAt(sub)
-  print(Game.cam.pos:get())
 
-  --world:addEntity(green_box)
 end
 
 
@@ -63,10 +61,6 @@ end
 function love.draw()
   lg.setColor(255, 255, 255)
   Visual.system:update()
-  -- green_box:draw()
-  -- sailor:draw()
-  -- _map:draw()
-  -- _map:drawPath(path)
 end
 
 function love.keypressed(k)

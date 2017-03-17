@@ -3,7 +3,8 @@ local Vector = require('vec2')
 local Position = {}
 Position.__index = Position
 
-function Position.new(x, y, location, ori)
+
+local function new(x, y, location, ori)
   return setmetatable({
       _local = Vector(x or -1, y or -1),
       ori = ori or 0,
@@ -17,30 +18,37 @@ function Position:set(x, y, location)
   if location then self.location = location end
 end
 
+
 function Position:move(dx, dy)
   self._local = self._local + Vector(dx, dy)
 end
 
-function Position:getX()
-  return self._local.x
-end
-
-function Position:getY()
-  return self._local.y
-end
 
 function Position:get()
   return self._local:clone()
 end
 
+
+function Position:getX()
+  return self._local.x
+end
+
+
+function Position:getY()
+  return self._local.y
+end
+
+
 function Position:update(delta)
   self._local = self._local + delta
 end
+
 
 function Position:setOri(d)
   assert(type(d) == 'number')
   self.ori = d
 end
+
 
 -- TODO: Not finished yet.
 -- function Position:rotate(d)
@@ -51,6 +59,7 @@ function Position:setLocation(parent)
   self.location = parent
 end
 
+
 function Position:hasParent()
   return self.location ~= nil or 'screen'
 end
@@ -59,6 +68,7 @@ end
 function Position:getParentPos()
   return self.location.position
 end
+
 
 function Position:getRoot()
   local parent = self:getParentPos()
@@ -91,6 +101,21 @@ function Position:isActive()
   return self._local == Vector(-1, -1)
 end
 
-setmetatable(Position, {__call = function(_, ...) return Position.new(...) end})
+
+local function basic_getPos(e)
+  return e.position._local
+end
+
+
+local function actual_getPos(e)
+  return e.position:getActual()
+end
+
+Position.func_t = {
+  actual = actual_getPos,
+  basic = basic_getPos
+}
+
+setmetatable(Position, {__call = function(_, ...) return new(...) end})
 
 return Position

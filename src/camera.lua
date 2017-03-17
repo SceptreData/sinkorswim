@@ -56,8 +56,6 @@ function Camera:translate(pos)
   local origin = self.pos:get() - Vector(cam_w / 2, cam_h / 2)
   local offset = Vector(pos.x - 1, pos.y - 1) - origin
 
-  print(offset)
-  print(offset:scale(DEFAULT_TILE_SIZE * self.zoom))
   return view_pos + offset:scale(DEFAULT_TILE_SIZE * self.zoom)
 end
 
