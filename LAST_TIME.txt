@@ -1,5 +1,7 @@
 Last time, on SINK OR SWIM:
     Cleaned up the Atlas file, split some constructors into Sprite.lua
+    Atlas:load is still a mess, but I will have to rewrite all my data files to
+    fix it.
 
 NEXT:
     Build Map?

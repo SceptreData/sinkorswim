@@ -3,6 +3,7 @@ local Log       = require('lib/log')
 
 local Animation = require('component.animation')
 local Sprite    = require('sprite')
+local Tile      = require('tile')
 local utils     = require('utils')
 
 -- Iternalization
@@ -20,6 +21,7 @@ local fs = love.filesystem
 local DATA_PATH  = 'data/'
 local ASSET_PATH = 'assets/'
 local BOOT_FILE  = '_LOAD_ON_BOOT.json'
+local TILE_FILE  = DATA_PATH .. '_TILES.json'
 
 local RESTRICTED_CHARS = {'_', '.'}
 
@@ -34,12 +36,13 @@ local stats = {
 
 Atlas.actor  = {}
 Atlas.boat   = {}
+Atlas.tile   = {}
 Atlas.static = {}
 
 
 function Atlas:initialize()
   assert(fs.exists(DATA_PATH), "FATAL: Data directory does not exist!")
-  assert(fs.exists(DATA_PATH .. BOOT_FILE) "Boot file path does not exist!")
+  assert(fs.exists(DATA_PATH .. BOOT_FILE), "Boot file path does not exist!")
   
   local boot_data    = loadJSON(DATA_PATH .. BOOT_FILE)
   local load_on_boot = arrayToSet(boot_data)
@@ -56,6 +59,8 @@ function Atlas:initialize()
       stats.num_entries = stats.num_entries + 1
     end
   end
+
+  self:loadTiles()
 end
 
 
@@ -121,6 +126,16 @@ function Atlas:Load(entry)
   stats.loaded_assets = stats.loaded_assets + 1
 end
 
+function Atlas:loadTiles()
+  assert(fs.exists(TILE_FILE))
+  local data = loadJSON(TILE_FILE)
+
+  for id, tile_data in pairs(data) do
+    self.tile[id] = unpack(tile_data)
+    stats.num_entries = stats.num_entries + 1
+  end
+  self.tile._cmap = Tile.mapChars()
+end
 
 function Atlas:unload(entry)
   if not entry.isLoaded then return end

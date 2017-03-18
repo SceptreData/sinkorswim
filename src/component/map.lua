@@ -1,5 +1,8 @@
 local Grid       = require('lib/jumper.grid')
 local Pathfinder = require('lib/jumper.pathfinder')
+
+local Tile       = require('tile')
+local Sprite     = require('sprite')
 local Vector     = require('math.vec2')
 
 local isVec2  = Vector.isVector

@@ -60,9 +60,16 @@ function utils.arrToSet(arr)
   return set
 end
 
+function utils.mapArrayVals(arr)
+  local t = {}
+  for i = 1, #arr do
+    t[arr[i]] = i
+  end
+  return t
+end
+
 
 -- Filesystem
-
 
 function utils.getFileNames(files)
   local t = {}

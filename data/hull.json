@@ -1,0 +1,11 @@
+{
+    "category": "static",
+    "id": "hull",
+    "img": "hull.png",
+    "sheet": { "rows": 3, "cols": 2,
+               "ids": ["horiz", "vert",
+                    "top_r", "bot_r",
+                    "bot_l", "top_l"
+               ]
+    }
+}

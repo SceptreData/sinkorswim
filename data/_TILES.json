@@ -1,0 +1,33 @@
+{
+    "hull": {
+        "char": "#",
+        "sprite": {
+            "group": "hull",
+            "id": "ALL"
+        },
+        "attributes": {
+            "solid": true,
+            "can_path": false,
+            "can_damage": true,
+            "hp": 100
+        }
+    },
+    "sub_floor": {
+        "char": ".",
+        "attributes": {
+            "solid": false,
+            "can_path": true,
+            "can_damage": true,
+            "hp": 100
+        }
+    },
+    "water": {
+        "char": "~",
+        "attributes": {
+            "solid": false,
+            "can_path": "true",
+            "can_damage":false,
+            "liquid": true
+        }
+
+}

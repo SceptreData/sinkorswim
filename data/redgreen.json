@@ -1,6 +1,8 @@
 {
     "category": "static",
-    "id": "debug_box",
+    "id": "debug",
     "img": "red_green.png",
-    "sheet": { "rows": 2, "cols": 1 }
+    "sheet": { "rows": 2, "cols": 1,
+               "ids": ["red_box", "green_box"]
+    }
 }
