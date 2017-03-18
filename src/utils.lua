@@ -52,6 +52,14 @@ function utils.getKeys(t)
   return keys
 end
 
+function utils.arrToSet(arr)
+  local set = {}
+  for i = 1, #arr do
+    set[arr[i]] = true
+  end
+  return set
+end
+
 
 -- Filesystem
 
@@ -66,11 +74,42 @@ function utils.getFileNames(files)
 end
 
 
+function utils.fileIsProtected(filename, restricted)
+  local prefix = string.sub(filename, 1, 1)
+  if type(restricted) == string then
+    return prefix == restricted
+  else
+    assert(type(restricted) == 'table')
+    for i = 1, #restricted do
+      if prefix == restricted[i] then return true end
+    end
+  end
+  return false
+end
+
+function utils.getFileType(file)
+  local t = lume.split(file, '.')
+  return t[2]
+end
+
 function utils.loadJSON(path)
   local contents, _ = fs.read(path)
   return json.decode(contents)
 end
 
+
+function utils.loadLua(path)
+  assert(fs.exists(path))
+  return dofile(path)
+end
+
+function utils.isJSON(file)
+  return (utils.getFileType(file) == 'json')
+end
+
+function utils.isLua(file)
+  return (utils.getFileType(file) == 'lua')
+end
 
 function utils.pause(condtion)
   if not condition then

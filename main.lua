@@ -1,11 +1,12 @@
 love.filesystem.setRequirePath('?.lua;src/?.lua;')
 
 local anim8 = require('lib/anim8')
-local json = require('lib/json')
-local lume = require('lib/lume')
-local tiny = require('lib/tiny')
+local json  = require('lib/json')
+local lume  = require('lib/lume')
+local tiny  = require('lib/tiny')
+local Log = require('lib/log')
 
-Log = require('lib/log')
+Event = require('lib/event')
 
 Atlas  = require('atlas')
 Game   = require('game')
@@ -24,21 +25,13 @@ local Visual    = require('component.visual')
 local fs = love.filesystem
 local lg = love.graphics
 
-
 local sailor, green_box, world, _map, path, sub
 
-function love.load()
-  Window:init()
-
-  Atlas:add('data/sailor.json')
-  Atlas:add('data/redgreen.json')
-  Atlas:add('data/grid_ship.json')
-
-  Game:new()
-
+local function RunScenario()
   sub = Boat:new('grid_ship')
+  --                            print(sub.map:getCell(1, 1))
   sailor = Actor('sailor')
-  green_box = Prop('debugBox', 2, true)
+  green_box = Prop('debug_box', 2, true)
 
   sub:attach('crew', sailor)
   sub:attach('objects', green_box)
@@ -47,7 +40,14 @@ function love.load()
   
   sub:init(10, 10)
   Game.cam:lookAt(sub)
+end
 
+function love.load()
+  Window:init()
+  Atlas:initialize()
+  Game:new()
+
+  RunScenario()
 end
 
 -- TODO
@@ -57,17 +57,18 @@ function love.update(dt)
   Game:update(dt)
 end
 
+
 function love.draw()
   lg.setColor(255, 255, 255)
   Visual.system:update()
 end
+
 
 function love.keypressed(k)
   if k == 'escape' then
     love.event.quit()
   end
 end
-
 --   if k == 'left' then sailor:move('left', 10)
 --   elseif k == 'right' then sailor:move('right', 10)
 --   elseif k == 'up' then sailor:move('up', 10)

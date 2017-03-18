@@ -1,6 +1,6 @@
 {
-    "category": "prop",
-    "id": "debugBox",
+    "category": "static",
+    "id": "debug_box",
     "img": "red_green.png",
     "sheet": { "rows": 2, "cols": 1 }
 }

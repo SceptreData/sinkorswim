@@ -1,6 +1,7 @@
 Last time, on SINK OR SWIM:
-   Cameras, viewports, reimplemented pros etc.
-   big commit 
+    Cleaned up the Atlas file, split some constructors into Sprite.lua
 
 NEXT:
+    Build Map?
     Reimplement Animations?
+

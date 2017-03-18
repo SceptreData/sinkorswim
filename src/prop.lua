@@ -7,7 +7,8 @@ local Prop = {}
 Prop.__index = Prop
 
 function Prop.new(id, frame_idx, is_solid)
-  local data = Atlas.prop[id]
+  local data = Atlas.static[id]
+  assert(data, "Error loading atlas entry " .. id)
 
   local p = setmetatable({}, Prop)
   p.id = id

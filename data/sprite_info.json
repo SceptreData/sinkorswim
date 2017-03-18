@@ -1,5 +1,0 @@
-{
-    "sailor": { "category": "character", "img": "sailor.png", "rows": 5, "cols": 4 },
-    "cat": { "category": "character", "img": "cat.png", "rows": 4, "cols": 8 },
-    "shadow": { "category": "fx", "img": "shadow.png", "rows": 1, "cols": 1 }
-}

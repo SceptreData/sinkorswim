@@ -2,7 +2,7 @@
 local anim8 = require('lib/anim8')
 local tiny  = require('lib/tiny')
 
-local Animation = {}
+local Animation   = {}
 Animation.__index = Animation
 
 function Animation.build(img, anim_data, spr_w, spr_h)
@@ -36,8 +36,8 @@ function Animation.attach(animations)
   return a
 end
 
+
 function Animation:set(state, dir)
-   -- Determine whether we need to flip our sprite.
    local flip = false
    if dir == 'right' then
      flip = self.flipped
@@ -58,6 +58,7 @@ function Animation:set(state, dir)
   end
 end
 
+
 function Animation:update(dt)
     self.cur:update(dt)
 end
@@ -67,6 +68,14 @@ Animation.system = tiny.processingSystem()
 Animation.system.filter = tiny.requireAll('component.animation')
 function Animation.system:process(e, dt)
   e.animation:update(e.state, e.dir, dt)
+end
+
+function Animation.listAnim(category, id)
+    for state, state_table in pairs(Atlas[category][id]) do
+      for sub, _ in pairs(state_table) do
+        print(state, sub)
+      end
+    end
 end
 
 return Animation

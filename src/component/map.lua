@@ -2,14 +2,12 @@ local Grid       = require('lib/jumper.grid')
 local Pathfinder = require('lib/jumper.pathfinder')
 local Vector     = require('math.vec2')
 
-
 local isVec2  = Vector.isVector
 
 local DEFAULT = {
   pathFunc = function(v) return v ~= '#' end,
   alg = 'ASTAR'
 }
-
 
 local Map = {}
 
@@ -30,6 +28,7 @@ function Map:notBlockedAt (x, y, f)
 end
 
 
+
 function Map:getPath(x0, y0, x1, y1)
   if isVector(x0) and isVector(y0) then
     x0, y0, x1, y1 = x0.x, x0.y, y0.x, y0.y
@@ -37,6 +36,13 @@ function Map:getPath(x0, y0, x1, y1)
   return self._pathfinder:getPath(x0, y0, x1, y1)
 end
 
+function Map:getCell(x, y)
+  return self._grid._map[y][x]
+end
+
+function Map:getNode(x, y)
+  return self._grid:getNodeAt(x, y)
+end
 
 -- TODO: Move this logic somewhere else, movement system?
 function Map:getDirection(origin, target)

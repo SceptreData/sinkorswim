@@ -1,110 +1,141 @@
 local lume      = require('lib/lume')
-local json      = require('lib/json')
-local anim8     = require('lib/anim8')
+local Log       = require('lib/log')
 
 local Animation = require('component.animation')
+local Sprite    = require('sprite')
 local utils     = require('utils')
+
+-- Iternalization
+local arrayToSet  = utils.arrToSet
+local loadJSON    = utils.loadJSON
+local loadLua     = utils.loadLua
+local getFileType = utils.getFileType
+local fileIsProtected = utils.fileIsProtected
 
 local lg = love.graphics
 local fs = love.filesystem
 
 
-local Atlas = {}
+-- FILEPATH STUFF
+local DATA_PATH  = 'data/'
+local ASSET_PATH = 'assets/'
+local BOOT_FILE  = '_LOAD_ON_BOOT.json'
+
+local RESTRICTED_CHARS = {'_', '.'}
+
+local Atlas   = {}
 Atlas.__index = Atlas
 
-Atlas.actor = {}
-Atlas.boat= {}
-Atlas.prop = {}
+local stats = {
+  num_entries     = 0,
+  loaded_assets   = 0,
+  protected_files = 0
+}
+
+Atlas.actor  = {}
+Atlas.boat   = {}
+Atlas.static = {}
 
 
-local function load_LuaAsset(path)
-  assert(fs.exists('assets/' .. path))
-  return dofile('assets/' .. path)
-end
-
-
-local function buildDefaults (data)
-  local defaults = {}
-
-  for category, arr in pairs(data) do
-    local objs = {}
-
-    for i = 1, #arr do
-      local entry = lume.split(arr[i])
-      assert(#entry > 0)
-      local id = entry[1]
-      local num = tonumber(entry[2]) or 1
-
-      objs[id] = num
-    end
-
-    defaults[category] = objs
-  end
-
-  return defaults
-end
-
-
-local function buildStaticSheet(img, sheet, sw, sh)
-  local img_w, img_h = img:getDimensions()
-  local frames = {}
-  for y = 0, sheet.rows - 1 do
-    for x = 0, sheet.cols - 1 do
-        local q = love.graphics.newQuad(x * sw, y * sh, sw, sh, img_w, img_h )
-        table.insert(frames, q)
-      end
-    end
-  return frames
-end
-
-
-local function getSpriteDimensions(img, sheet_info)
-  local img_w, img_h = img:getDimensions()
-  local sprite_w = img_w / sheet_info.cols
-  local sprite_h = img_h / sheet_info.rows
-
-  return sprite_w, sprite_h
-end
- 
-
-function Atlas:add(path)
-  local asset = utils.loadJSON(path)
+function Atlas:initialize()
+  assert(fs.exists(DATA_PATH), "FATAL: Data directory does not exist!")
+  assert(fs.exists(DATA_PATH .. BOOT_FILE) "Boot file path does not exist!")
   
-  local entry = {
-    name     = asset.name or asset.id,
-    details  = asset.details or nil,
-    defaults = asset.defaults and buildDefaults(asset.defaults) or nil,
-  }
+  local boot_data    = loadJSON(DATA_PATH .. BOOT_FILE)
+  local load_on_boot = arrayToSet(boot_data)
 
-  if asset.img then
-    entry.img = lg.newImage('assets/' .. asset.img)
+  local files = fs.getDirectoryItems(DATA_PATH)
+
+  for i = 1, #files do
+    local file = files[i]
+    if fileIsProtected(file, RESTRICTED_CHARS) then
+      stats.protected_files = stats.protected_files + 1
+    else
+      local load_now = load_on_boot[file]
+      Atlas:newEntry(file, load_now or false)
+      stats.num_entries = stats.num_entries + 1
+    end
+  end
+end
+
+
+local LOAD_FUNC = {
+   lua  = loadLua,
+  json  = loadJSON
+}
+
+--TODO Remove builDefault function, rework data
+function Atlas:newEntry(filename, load_now)
+  local f_type = getFileType(filename)
+  local loadFunc = LOAD_FUNC[f_type]
+  local asset = loadFunc(DATA_PATH .. filename)
+
+  local entry = {
+    id        = asset.id,
+    name      = asset.name or nil,
+    details   = asset.details or nil,
+    defaults  = asset.defaults or nil,
+    img_path  = asset.img or nil,
+    img_sheet = asset.sheet or nil,
+    anim_data = asset.animations or nil,
+    map_asset = asset.map,
+    isLoaded  = false
+  }
+  self[asset.category][asset.id] = entry
+  
+  if load_now == true then
+    Atlas:Load(entry)
+  end
+end
+
+local function _loadAssetFile(filename)
+  local path = ASSET_PATH .. filename
+  assert(fs.exists(path), path)
+  local loadFunc = LOAD_FUNC[getFileType(filename)]
+  return loadFunc(path)
+end
+
+-- TODO: Rework Data files so this isnt as horrifying
+function Atlas:Load(entry)
+  if entry.isLoaded then return end
+
+  if entry.img_path then
+    entry.img = lg.newImage(ASSET_PATH .. entry.img_path)
     entry.img:setFilter('nearest', 'nearest')
   end
 
-  if asset.sheet then
-    local sw, sh = getSpriteDimensions(entry.img, asset.sheet)
-    if asset.animations then
-      entry.anim = Animation.build(entry.img, asset.animations, sw, sh)
+  if entry.img_sheet then
+    local sw, sh = Sprite.getDimensions(entry.img, entry.img_sheet)
+    if entry.anim_data then
+      entry.anim = Animation.build(entry.img, entry.anim_data, sw, sh)
     else
-      entry.frames = buildStaticSheet(entry.img, asset.sheet, sw, sh)
+      entry.frames = Sprite.newStatic(entry.img, entry.img_sheet, sw, sh)
     end
     entry.sw, entry.sh = sw, sh
   end
 
-  -- TODO: Get rid of this LuaAsset call
-  if asset.map then
-    entry.map_data = load_LuaAsset(asset.map)
+  if entry.map_asset then
+    entry.map_data = _loadAssetFile(entry.map_asset)
   end
-
-  self[asset.category][asset.id] = entry
+  entry.isLoaded = true
+  stats.loaded_assets = stats.loaded_assets + 1
 end
 
-function Atlas:listAnim(category, id)
-    for state, state_table in pairs(self[category][id]) do
-      for sub, _ in pairs(state_table) do
-        print(state, sub)
-      end
-    end
+
+function Atlas:unload(entry)
+  if not entry.isLoaded then return end
+  entry.img      = nil
+  entry.anim     = nil
+  entry.frames   = nil
+  entry.map_data = nil
+  entry.sw, entry.sh = nil, nil
+  
+  entry.isLoaded = false
+  stats.loaded_assets = stats.loaded_assets - 1
+end
+
+function Atlas:getStats()
+  return stats
 end
 
 return Atlas

@@ -86,9 +86,10 @@ function Visual:draw(e, camera)
     if DEBUG_drawBox then Draw.box(screen_pos.x, screen_pos.y, self.spr_w, self.spr_h) end
   end
 end
-   
 
-Visual.system = tiny.processingSystem()
+
+-- Visual.system = tiny.processingSystem()
+Visual.system = tiny.sortedProcessingSystem()
 Visual.system.filter = tiny.requireAll("visual", "position")
 function Visual.system:process(e)
   if Game.cam:canSee(e) then
