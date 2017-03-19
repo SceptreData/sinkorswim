@@ -1,0 +1,52 @@
+{
+    "asset_array": [
+        {
+            "id": "hull",
+            "char": "#",
+            "img": "hull.png",
+            "static": true,
+            "sprite_sheet": {
+                "width": 2,
+                "height": 2,
+                "frames": {
+                    "horizontal": [1, 1],
+                    "vertical": [2, 1],
+                    "top_right": [1, 2],
+                    "bot_right": [2, 2],
+                    "bot_left": [1, 3],
+                    "top_left": [2, 3]
+                }
+            },
+            "attributes": {
+                "solid": true,
+                "can_path": false,
+                "can_damage": true,
+                "hp": 100
+            }
+        },
+        {
+            "id:": "floors",
+            "char": ".",
+            "img": "floors.png",
+            "static": true,
+            "sprite_sheet":{
+                "width": 4,
+                "height": 2,
+                "frames": {
+                    "plain": [1, 1],
+                    "dirty": [2, 1],
+                    "shower": [3, 1],
+                    "pipes": [4, 1],
+                    "flood": ["1-2", 2],
+                    "wood": ["3-4", 2]
+                }
+            }
+            "attributes": {
+                "solid": false,
+                "can_path": true,
+                "can_damage": true,
+                "hp": 100
+            }
+        }
+    ]
+}
