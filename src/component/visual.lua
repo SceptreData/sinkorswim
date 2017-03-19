@@ -20,8 +20,11 @@ local DEFAULT_POS_FUNC  = Position.func_t['actual']
 
 local function new(v_data)
   local v = setmetatable({}, Visual)
-  v._cat  =  v_data.id
-  v.img   = v_data.img or nil
+
+  v._id      = v_data.id
+  v.priority = v_data.priority
+  v.img      = v_data.img or nil
+  v.map      = v_data.map or nil
   v.spr_w, v.spr_h = v_data.w, v_data.h
 
   v._drawFunc = Draw[v_data.id]
@@ -79,17 +82,20 @@ function Visual:draw(e, camera)
   local world_pos  = self._posFunc(e)
   local screen_pos = camera:translate(world_pos) 
 
-  if self._cat == 'map' then
-    e.map:each(Draw.mapNode, screen_pos.x, screen_pos.y)
-  else
+    --e.map:each(Draw.mapNode, screen_pos.x, screen_pos.y)
     self:_drawFunc(screen_pos.x, screen_pos.y)
     if DEBUG_drawBox then Draw.box(screen_pos.x, screen_pos.y, self.spr_w, self.spr_h) end
   end
 end
 
+function Visual.system:sort()
+  table.sort(self.entities, function(a, b)
+    return a.visual.priority < b.visual.priority
+  end)
+end
 
--- Visual.system = tiny.processingSystem()
-Visual.system = tiny.sortedProcessingSystem()
+Visual.system = tiny.processingSystem()
+--Visual.system = tiny.sortedProcessingSystem()
 Visual.system.filter = tiny.requireAll("visual", "position")
 function Visual.system:process(e)
   if Game.cam:canSee(e) then

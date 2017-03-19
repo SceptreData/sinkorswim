@@ -21,6 +21,7 @@ local Animation = require('component.animation')
 local Collision = require('component.collision')
 local Map       = require('component.map')
 local Visual    = require('component.visual')
+local U         = require('utils')
 
 local fs = love.filesystem
 local lg = love.graphics
@@ -30,7 +31,7 @@ local Sprite = require('sprite')
 local sailor, green_box, world, _map, path, sub
 
 local function RunScenario()
-  print(Sprite.mapGet('debug', 'red_box'))
+  --print(Sprite.mapGet('debug', 'red_box'))
   sub = Boat:new('grid_ship')
   --                            print(sub.map:getCell(1, 1))
   sailor = Actor('sailor')
@@ -42,7 +43,7 @@ local function RunScenario()
   green_box:place(3, 3)
   
   sub:init(10, 10)
-  Game.cam:lookAt(sub)
+    Game.cam:lookAt(sub)
 end
 
 function love.load()

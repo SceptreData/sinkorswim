@@ -1,8 +1,10 @@
 local Animation = require('component.animation')
 local Vector    = require('math.vec2')
+local Tile      = require('tile')
 local Rect      = require('geometry.rect')
 
 local lg = love.graphics
+local getTileId = Tile.lookupChar
 
 local Draw = {}
 Draw.__index = Draw
@@ -15,8 +17,20 @@ function Draw.static(v, x, y)
   lg.draw(v.img, v.sprite, x, y)
 end
 
-function Draw.map(x, y)
-  return
+function Draw.map(v, x0, y0)
+  v.map:eachCell(function(c, x, y, x0, y0)
+    local t_id = getTileId(c)
+    local tile = Atlas.tile[t_id]
+    if tile.sprite then
+      local q 
+      lg.draw()
+      
+    
+    
+
+
+
+  end, start_x, start_y)
 end
 
 function Draw.box(x, y, w, h)

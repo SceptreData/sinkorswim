@@ -1,6 +1,0 @@
-{
-    "category": "static",
-    "id": "floor",
-    "img": "floor_tiles.png",
-    "sheet": { "rows": 3, "cols": 2 }
-}

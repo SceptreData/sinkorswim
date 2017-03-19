@@ -60,6 +60,15 @@ function Map:each(f, ...)
   return self
 end
 
+function Map:eachCell(f, ...)
+  for node in self._grid:iter() do
+    local x, y = node:getX(), node:getY()
+    local cell = self:getCell(x, y)
+    f(cell, x, y, ...)
+  end
+  return self
+end
+
 
 function Map:eachRange(f, x0, y0, x1, y1, ...)
   if isVec2(x0) and isVec2(y0) then
@@ -68,6 +77,14 @@ function Map:eachRange(f, x0, y0, x1, y1, ...)
 
   for node in self._grid:iter(x0, y0, x1, y1) do
     f(node, ...)
+  end
+  return self
+end
+
+
+function Map:eachTile(f, ...)
+  for node in self._grid:iter() do
+    f(self:getCell(node:getX(), node:getY()), ...)
   end
   return self
 end

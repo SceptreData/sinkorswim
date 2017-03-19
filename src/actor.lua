@@ -14,6 +14,8 @@ local utils  = require('utils')
 local Actor = {}
 Actor.__index = Actor
 
+local ACTOR_VISUAL_PRIO = 2
+
 function Actor.new(id)
   local data = Atlas.actor[id]
   assert(data, "failed to load Actor: %s", id)
@@ -34,6 +36,7 @@ function Actor.new(id)
     w    = data.sw,
     h    = data.sh,
     anim = data.anim,
+    priority = ACTOR_VISUAL_PRIO
   })
   
   return a

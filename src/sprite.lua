@@ -29,8 +29,6 @@ function Sprite.mapGet(atlas_id, sprite_id)
   return spr_t[idx]
 end
 
-
-
 function Sprite.getDimensions(img, sheet_info)
   local img_w, img_h = img:getDimensions()
   local sprite_w = img_w / sheet_info.cols

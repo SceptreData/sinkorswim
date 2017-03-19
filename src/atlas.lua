@@ -16,12 +16,8 @@ local fileIsProtected = utils.fileIsProtected
 local lg = love.graphics
 local fs = love.filesystem
 
-
 -- FILEPATH STUFF
-local DATA_PATH  = 'data/'
-local ASSET_PATH = 'assets/'
-local BOOT_FILE  = '_LOAD_ON_BOOT.json'
-local TILE_FILE  = DATA_PATH .. '_TILES.json'
+local GAME_PATH = 'game/'
 
 local RESTRICTED_CHARS = {'_', '.'}
 
@@ -34,11 +30,12 @@ local stats = {
   protected_files = 0
 }
 
-Atlas.actor  = {}
+Atlas.actors = {}
 Atlas.boat   = {}
-Atlas.tile   = {}
-Atlas.static = {}
-
+Atlas.env    = {}
+Atlas.fx     = {}
+Atlas.objs   = {}
+Atlas.props  = {}
 
 function Atlas:initialize()
   assert(fs.exists(DATA_PATH), "FATAL: Data directory does not exist!")
@@ -131,10 +128,10 @@ function Atlas:loadTiles()
   local data = loadJSON(TILE_FILE)
 
   for id, tile_data in pairs(data) do
-    self.tile[id] = unpack(tile_data)
+    self.tile[id] = Tile(
     stats.num_entries = stats.num_entries + 1
   end
-  self.tile._cmap = Tile.mapChars()
+  self.tile._map = Tile.mapChars()
 end
 
 function Atlas:unload(entry)

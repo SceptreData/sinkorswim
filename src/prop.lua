@@ -6,6 +6,8 @@ local Visual   = require('component.visual')
 local Prop = {}
 Prop.__index = Prop
 
+local PROP_VIS_PRIO = 2
+
 function Prop.new(id, frame_idx, is_solid)
   local data = Atlas.static[id]
   assert(data, "Error loading atlas entry " .. id)
@@ -20,7 +22,8 @@ function Prop.new(id, frame_idx, is_solid)
     img = data.img,
     sprite_frame = data.frames[frame_idx],
     w   = data.sw,
-    h   = data.sh
+    h   = data.sh,
+    priority = PROP_VIS_PRIO
   })
   p.is_solid = is_solid or false
 

@@ -5,6 +5,8 @@ local Map      = require('component.map')
 
 local Boat = {}
 
+local BOAT_VIS_PRIO = 1
+
 function Boat:new (id)
   local data = Atlas.boat[id]
   assert(data)
@@ -21,7 +23,9 @@ function Boat:new (id)
   b.visual = Visual({
     id = 'map', 
     w = cell_size,
-    h = cell_size
+    h = cell_size,
+    map = b.map,
+    priority = BOAT_VIS_PRIO
   })
 
   b.crew = {}
