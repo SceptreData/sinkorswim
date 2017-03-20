@@ -6,10 +6,9 @@ local Animation   = {}
 Animation.__index = Animation
 
 function Animation.build(img, anim_data, spr_w, spr_h)
-  local anim_t = {}
-
   local grid = anim8.newGrid(spr_w, spr_h, img:getWidth(), img:getHeight())
 
+  local anim_t = {}
   for idx, _ in ipairs(anim_data) do
     local state = anim_data[idx]
     if anim_t[state.id] == nil then anim_t[state.id] = {} end

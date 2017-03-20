@@ -9,7 +9,7 @@ Prop.__index = Prop
 local PROP_VIS_PRIO = 2
 
 function Prop.new(id, frame_idx, is_solid)
-  local data = Atlas.static[id]
+  local data = Atlas.prop[id]
   assert(data, "Error loading atlas entry " .. id)
 
   local p = setmetatable({}, Prop)
@@ -20,7 +20,7 @@ function Prop.new(id, frame_idx, is_solid)
   p.visual = Visual({
     id  = 'static',
     img = data.img,
-    sprite_frame = data.frames[frame_idx],
+    sprite_frame = data.sprites[frame_idx],
     w   = data.sw,
     h   = data.sh,
     priority = PROP_VIS_PRIO

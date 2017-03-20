@@ -1,13 +1,11 @@
 {
-    "category": "boat",
     "id": "grid_ship",
     "name": "Grid Ship",
-
-    "details": {
+    "map": {"model": "model_gridship.lua"},
+    "info": {
         "class": "sub",
         "max_depth": 100
     },
-
     "defaults": {
             "crew": {
                 "sailor": 3,
@@ -19,6 +17,4 @@
                 "fire_extinguisher": 2
             }
     },
-
-    "map": "model_gridship.lua"
 }

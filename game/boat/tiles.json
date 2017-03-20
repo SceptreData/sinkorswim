@@ -1,5 +1,6 @@
 {
-    "asset_array": [
+    "id": "tile",
+    "array": [
         {
             "id": "hull",
             "char": "#",
@@ -25,7 +26,7 @@
             }
         },
         {
-            "id:": "floors",
+            "id": "floors",
             "char": ".",
             "img": "floors.png",
             "static": true,
@@ -40,7 +41,7 @@
                     "flood": ["1-2", 2],
                     "wood": ["3-4", 2]
                 }
-            }
+            },
             "attributes": {
                 "solid": false,
                 "can_path": true,

@@ -17,21 +17,24 @@ function Draw.static(v, x, y)
   lg.draw(v.img, v.sprite, x, y)
 end
 
-function Draw.map(v, x0, y0)
-  v.map:eachCell(function(c, x, y, x0, y0)
-    local t_id = getTileId(c)
-    local tile = Atlas.tile[t_id]
-    if tile.sprite then
-      local q 
-      lg.draw()
-      
-    
-    
-
-
-
-  end, start_x, start_y)
+function Draw.map()
+  return
 end
+-- function Draw.map(v, x0, y0)
+--   v.map:eachCell(function(c, x, y, x0, y0)
+--     local t_id = getTileId(c)
+--     local tile = Atlas.tile[t_id]
+--     if tile.sprite then
+--       local q 
+--       lg.draw()
+--       
+--     
+--     
+--
+--
+--
+--   end, start_x, start_y)
+-- end
 
 function Draw.box(x, y, w, h)
   local box = Rect(x, y, w, h)

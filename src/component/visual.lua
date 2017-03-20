@@ -82,11 +82,14 @@ function Visual:draw(e, camera)
   local world_pos  = self._posFunc(e)
   local screen_pos = camera:translate(world_pos) 
 
-    --e.map:each(Draw.mapNode, screen_pos.x, screen_pos.y)
-    self:_drawFunc(screen_pos.x, screen_pos.y)
-    if DEBUG_drawBox then Draw.box(screen_pos.x, screen_pos.y, self.spr_w, self.spr_h) end
-  end
+   if e.map then e.map:each(Draw.mapNode, screen_pos.x, screen_pos.y) end
+   self:_drawFunc(screen_pos.x, screen_pos.y)
+   if DEBUG_drawBox then Draw.box(screen_pos.x, screen_pos.y, self.spr_w, self.spr_h) end
 end
+
+
+Visual.system = tiny.processingSystem()
+Visual.system.filter = tiny.requireAll("visual", "position")
 
 function Visual.system:sort()
   table.sort(self.entities, function(a, b)
@@ -94,9 +97,7 @@ function Visual.system:sort()
   end)
 end
 
-Visual.system = tiny.processingSystem()
 --Visual.system = tiny.sortedProcessingSystem()
-Visual.system.filter = tiny.requireAll("visual", "position")
 function Visual.system:process(e)
   if Game.cam:canSee(e) then
     e.visual:draw(e, Game.cam)

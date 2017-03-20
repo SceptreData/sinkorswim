@@ -1,0 +1,8 @@
+{
+    "category": "static",
+    "id": "debug",
+    "img": "red_green.png",
+    "sprite_sheet": { "height": 2, "width": 1,
+               "frames": {"red_box":[1, 1], "green_box": [1, 2]}
+    }
+}

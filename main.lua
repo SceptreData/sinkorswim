@@ -43,7 +43,7 @@ local function RunScenario()
   green_box:place(3, 3)
   
   sub:init(10, 10)
-    Game.cam:lookAt(sub)
+  Game.cam:lookAt(sub)
 end
 
 function love.load()

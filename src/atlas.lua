@@ -16,10 +16,12 @@ local fileIsProtected = utils.fileIsProtected
 local lg = love.graphics
 local fs = love.filesystem
 
--- FILEPATH STUFF
+-- ATLAS OPTIONS
 local GAME_PATH = 'game/'
-
 local RESTRICTED_CHARS = {'_', '.'}
+local LOAD_ALL = true
+
+local CHAPTERS = {'actor', 'boat', 'env', 'fx', 'obj', 'prop'}
 
 local Atlas   = {}
 Atlas.__index = Atlas
@@ -27,111 +29,123 @@ Atlas.__index = Atlas
 local stats = {
   num_entries     = 0,
   loaded_assets   = 0,
-  protected_files = 0
 }
-
-Atlas.actors = {}
-Atlas.boat   = {}
-Atlas.env    = {}
-Atlas.fx     = {}
-Atlas.objs   = {}
-Atlas.props  = {}
-
-function Atlas:initialize()
-  assert(fs.exists(DATA_PATH), "FATAL: Data directory does not exist!")
-  assert(fs.exists(DATA_PATH .. BOOT_FILE), "Boot file path does not exist!")
-  
-  local boot_data    = loadJSON(DATA_PATH .. BOOT_FILE)
-  local load_on_boot = arrayToSet(boot_data)
-
-  local files = fs.getDirectoryItems(DATA_PATH)
-
-  for i = 1, #files do
-    local file = files[i]
-    if fileIsProtected(file, RESTRICTED_CHARS) then
-      stats.protected_files = stats.protected_files + 1
-    else
-      local load_now = load_on_boot[file]
-      Atlas:newEntry(file, load_now or false)
-      stats.num_entries = stats.num_entries + 1
-    end
-  end
-
-  self:loadTiles()
-end
-
 
 local LOAD_FUNC = {
    lua  = loadLua,
   json  = loadJSON
 }
 
---TODO Remove builDefault function, rework data
-function Atlas:newEntry(filename, load_now)
-  local f_type = getFileType(filename)
-  local loadFunc = LOAD_FUNC[f_type]
-  local asset = loadFunc(DATA_PATH .. filename)
 
-  local entry = {
-    id        = asset.id,
-    name      = asset.name or nil,
-    details   = asset.details or nil,
-    defaults  = asset.defaults or nil,
-    img_path  = asset.img or nil,
-    img_sheet = asset.sheet or nil,
-    anim_data = asset.animations or nil,
-    map_asset = asset.map,
-    isLoaded  = false
-  }
-  self[asset.category][asset.id] = entry
-  
-  if load_now == true then
-    Atlas:Load(entry)
-  end
+function isAsset(path, file)
+  return (fs.isFile(path .. file) and not fileIsProtected(file, RESTRICTED_CHARS))
 end
 
-local function _loadAssetFile(filename)
-  local path = ASSET_PATH .. filename
-  assert(fs.exists(path), path)
-  local loadFunc = LOAD_FUNC[getFileType(filename)]
+
+local function loadAsset(path)
+  assert(fs.exists(path))
+  local loadFunc = LOAD_FUNC[getFileType(path)]
   return loadFunc(path)
 end
 
+-- TODO: MAYBE rework this to just unpack the json object.
+--       Have fields potentially be multiple types, for instance if
+--       img == type(String) then we know img hasnt been loaded
+local function newEntry(asset)
+  local entry = {
+    id        = asset.id,
+    name      = asset.name or nil,
+    char      = asset.char or nil,
+    static    = asset.static or nil,
+    info      = asset.details or asset.attributes or nil,
+    defaults  = asset.defaults or nil,
+    img_file  = asset.img or nil,
+    spr_sheet = asset.sprite_sheet or nil,
+    anim_data = asset.animations or nil,
+    map_asset = asset.map or nil,
+    isLoaded  = false
+  }
+  return entry
+end
+
+
+function Atlas:initialize()
+  assert(fs.exists(GAME_PATH), "FATAL: Data directory does not exist!")
+  for _, chapter in ipairs(CHAPTERS) do
+    if not Atlas[chapter] then Atlas[chapter] = {} end
+    local path = GAME_PATH .. chapter.. '/'
+    local files = fs.getDirectoryItems(path)
+    for i = 1, #files do
+      local file = files[i]
+      if isAsset(path, file) then 
+        local asset = loadAsset(path .. file)
+        if asset.array then 
+          self:addGroup(chapter, asset.id, asset.array)
+        else
+          self:addTo(chapter, newEntry(asset))
+        end
+      end
+    end
+  end
+  self.boat.tile._map = Tile.mapChars()
+end
+
+
+function Atlas:get(val_str)
+  local sections = lume.split(val_str, '.')
+  local target, root = self, GAME_PATH .. sections[1] .. '/'
+  for i = 1, #sections do
+    target = target[sections[i]]
+  end
+  return target, GAME_PATH.. sections[1] .. '/'
+end
+
+function Atlas:addTo(atl_path, entry, load_now)
+  local t = self:get(atl_path)
+  assert(t, "trying to add to invalid atlas path: ".. atl_path)
+  t[entry.id] = entry
+
+  stats.num_entries = stats.num_entries + 1
+  if LOAD_ALL == true or load_now == true then
+    self:Load(atl_path .. '.' .. entry.id)
+  end
+end
+  
+function Atlas:addGroup(chapter, id, assets)
+  if not self[chapter][id] then self[chapter][id] = {} end
+  local atl_path = chapter ..'.'.. id
+  for i = 1, #assets do
+    local entry = newEntry(assets[i])
+    self:addTo(atl_path, entry) 
+  end
+end
+
 -- TODO: Rework Data files so this isnt as horrifying
-function Atlas:Load(entry)
+function Atlas:Load(atl_path)
+  local entry, root = self:get(atl_path)
+  assert(entry)
   if entry.isLoaded then return end
 
-  if entry.img_path then
-    entry.img = lg.newImage(ASSET_PATH .. entry.img_path)
+  if entry.img_file then
+    entry.img = lg.newImage(root .. 'images/'.. entry.img_file)
     entry.img:setFilter('nearest', 'nearest')
   end
 
-  if entry.img_sheet then
-    local sw, sh = Sprite.getDimensions(entry.img, entry.img_sheet)
+  if entry.spr_sheet then
+    local sw, sh = Sprite.getDimensions(entry.img, entry.spr_sheet)
     if entry.anim_data then
       entry.anim = Animation.build(entry.img, entry.anim_data, sw, sh)
     else
-      entry.frames = Sprite.newStatic(entry.img, entry.img_sheet, sw, sh)
+      entry.sprites = Sprite.newStatic(entry.img, entry.spr_sheet, sw, sh)
     end
     entry.sw, entry.sh = sw, sh
   end
 
   if entry.map_asset then
-    entry.map_data = _loadAssetFile(entry.map_asset)
+    entry.map_data = loadAsset(root .. 'models/' .. entry.map_asset.model)
   end
   entry.isLoaded = true
   stats.loaded_assets = stats.loaded_assets + 1
-end
-
-function Atlas:loadTiles()
-  assert(fs.exists(TILE_FILE))
-  local data = loadJSON(TILE_FILE)
-
-  for id, tile_data in pairs(data) do
-    self.tile[id] = Tile(
-    stats.num_entries = stats.num_entries + 1
-  end
-  self.tile._map = Tile.mapChars()
 end
 
 function Atlas:unload(entry)

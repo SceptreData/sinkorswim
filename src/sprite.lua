@@ -9,8 +9,8 @@ Sprite.__index = Sprite
 function Sprite.newStatic(img, sheet, sw, sh)
   local img_w, img_h = img:getDimensions()
   local sprites = {}
-  for y = 0, sheet.rows - 1 do
-    for x = 0, sheet.cols - 1 do
+  for y = 0, sheet.height - 1 do
+    for x = 0, sheet.width - 1 do
         local q = lg.newQuad(x * sw, y * sh, sw, sh, img_w, img_h )
         table.insert(sprites, q)
      end
@@ -29,10 +29,10 @@ function Sprite.mapGet(atlas_id, sprite_id)
   return spr_t[idx]
 end
 
-function Sprite.getDimensions(img, sheet_info)
+function Sprite.getDimensions(img, spr_sheet)
   local img_w, img_h = img:getDimensions()
-  local sprite_w = img_w / sheet_info.cols
-  local sprite_h = img_h / sheet_info.rows
+  local sprite_w = img_w / spr_sheet.width
+  local sprite_h = img_h / spr_sheet.height
 
   return sprite_w, sprite_h
 end
