@@ -27,7 +27,7 @@ local function new(v_data)
 
   v.img      = v_data.img or nil
   v.map      = v_data.map or nil
-  v.tile_map = v_data.tile_map
+  v.t_group  = v_data.tile_group or nil
   v.spr_w, v.spr_h = v_data.w, v_data.h
 
   v._drawFunc = Draw[v_data.id]
@@ -85,7 +85,7 @@ function Visual:draw(e, camera)
   local world_pos  = self._posFunc(e)
   local screen_pos = camera:translate(world_pos) 
 
-   if e.map then e.map:each(Draw.mapNode, screen_pos.x, screen_pos.y) end
+   --if e.map then e.map:each(Draw.mapNode, screen_pos.x, screen_pos.y) end
    self:_drawFunc(screen_pos.x, screen_pos.y)
    if DEBUG_drawBox then Draw.box(screen_pos.x, screen_pos.y, self.spr_w, self.spr_h) end
 end

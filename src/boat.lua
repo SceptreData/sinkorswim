@@ -22,12 +22,12 @@ function Boat:new (id)
   b.width, b.height = b.map:getWidth(), b.map:getHeight()
 
   b.visual = Visual({
-    id = 'map', 
-    w = cell_size,
-    h = cell_size,
-    map = b.map,
-    tile_map = 'boat',
-    priority = BOAT_VIS_PRIO
+    id         = 'map',
+    w          = cell_size,
+    h          = cell_size,
+    map        = b.map,
+    tile_group = 'boat',
+    priority   = BOAT_VIS_PRIO
   })
 
   b.visual.spr_map = Sprite.buildSpriteMap('boat', b.map)

@@ -21,7 +21,7 @@ function Draw.map(v, x, y)
     for j = 1, v.map:getHeight() do
       for i = 1, v.map:getWidth() do
         local c = v.map:getCell(i, j)
-        local tile = Atlas.boat.tile[Atlas.boat.tile._map[c]]
+        local tile = Tile.getTileFrom(v.t_group, c)
         local spr_idx = v.spr_map[j][i]
         local q = tile.sprites[spr_idx]
         lg.draw(tile.img, q, x + (i * 32), y + (j * 32))
@@ -29,21 +29,6 @@ function Draw.map(v, x, y)
     end
 end
 
--- function Draw.map(v, x0, y0)
---   v.map:eachCell(function(c, x, y, x0, y0)
---     local t_id = getTileId(c)
---     local tile = Atlas.tile[t_id]
---     if tile.sprite then
---       local q 
---       lg.draw()
---       
---     
---     
---
---
---
---   end, start_x, start_y)
--- end
 
 function Draw.box(x, y, w, h)
   local box = Rect(x, y, w, h)
