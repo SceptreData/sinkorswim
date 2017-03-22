@@ -44,7 +44,6 @@ local function RunScenario()
   
   sub:init(10, 10)
   Game.cam:lookAt(sub)
-  print(sub.map:getBounds())
 end
 
 function love.load()
@@ -65,6 +64,7 @@ end
 
 function love.draw()
   lg.setColor(255, 255, 255)
+  lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
   Visual.system:update()
 end
 
