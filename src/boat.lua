@@ -2,6 +2,7 @@ local Position = require('component.position')
 local Vector   = require('math.vec2')
 local Visual   = require('component.visual')
 local Map      = require('component.map')
+local Sprite = require('sprite')
 
 local Boat = {}
 
@@ -25,9 +26,11 @@ function Boat:new (id)
     w = cell_size,
     h = cell_size,
     map = b.map,
+    tile_map = 'boat',
     priority = BOAT_VIS_PRIO
   })
 
+  b.visual.spr_map = Sprite.buildSpriteMap('boat', b.map)
   b.crew = {}
   b.objects = {}
   b.status = 'pre_init'

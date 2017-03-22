@@ -7,8 +7,9 @@
             "img": "hull.png",
             "static": true,
             "sprite_sheet": {
+                "rule": "wall",
                 "width": 2,
-                "height": 2,
+                "height": 3,
                 "frames": {
                     "horizontal": [1, 1],
                     "vertical": [2, 1],

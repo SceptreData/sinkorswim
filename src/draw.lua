@@ -17,9 +17,18 @@ function Draw.static(v, x, y)
   lg.draw(v.img, v.sprite, x, y)
 end
 
-function Draw.map()
-  return
+function Draw.map(v, x, y)
+    for j = 1, v.map:getHeight() do
+      for i = 1, v.map:getWidth() do
+        local c = v.map:getCell(i, j)
+        local tile = Atlas.boat.tile[Atlas.boat.tile._map[c]]
+        local spr_idx = v.spr_map[j][i]
+        local q = tile.sprites[spr_idx]
+        lg.draw(tile.img, q, x + (i * 32), y + (j * 32))
+      end
+    end
 end
+
 -- function Draw.map(v, x0, y0)
 --   v.map:eachCell(function(c, x, y, x0, y0)
 --     local t_id = getTileId(c)

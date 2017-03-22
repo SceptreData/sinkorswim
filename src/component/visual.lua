@@ -4,6 +4,7 @@ local Animation = require('component.animation')
 local Draw      = require('draw')
 local Camera    = require('camera')
 local Position  = require('component.position')
+local Tile      = require('tile')
 local Rect      = require('geometry.rect')
 local Vector    = require('math.vec2')
 
@@ -23,8 +24,10 @@ local function new(v_data)
 
   v._id      = v_data.id
   v.priority = v_data.priority
+
   v.img      = v_data.img or nil
   v.map      = v_data.map or nil
+  v.tile_map = v_data.tile_map
   v.spr_w, v.spr_h = v_data.w, v_data.h
 
   v._drawFunc = Draw[v_data.id]
@@ -35,7 +38,7 @@ local function new(v_data)
   end
   v.sprite = v_data.sprite_frame or nil
 
-  v._dirty = false
+  v._dirty = true
   return v
 end
 

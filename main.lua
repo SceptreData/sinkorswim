@@ -44,6 +44,7 @@ local function RunScenario()
   
   sub:init(10, 10)
   Game.cam:lookAt(sub)
+  print(sub.map:getBounds())
 end
 
 function love.load()

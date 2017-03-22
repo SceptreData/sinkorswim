@@ -8,9 +8,9 @@ Tile.__index = tile
 --     sprite = data.sprite and b}
 -- end
 
-function Tile.mapChars()
+function Tile.mapChars(group)
   local c_map = {}
-  for id, data in pairs(Atlas.boat.tile) do
+  for id, data in pairs(Atlas[group].tile) do
     local c = data.char
     c_map[c] = id
   end
@@ -18,8 +18,13 @@ function Tile.mapChars()
   return c_map
 end
 
-function Tile.lookupChar(c)
-  return Atlas.tile._map[c]
+function Tile.lookup(group, c)
+  return Atlas[group].tile._map[c]
+end
+
+function Tile.getGroup(group)
+  assert(type(group) == 'string')
+  return Atlas[group].tile
 end
 
 return Tile

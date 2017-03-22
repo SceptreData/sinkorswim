@@ -37,7 +37,7 @@ local LOAD_FUNC = {
 }
 
 
-function isAsset(path, file)
+local function isAsset(path, file)
   return (fs.isFile(path .. file) and not fileIsProtected(file, RESTRICTED_CHARS))
 end
 
@@ -87,7 +87,7 @@ function Atlas:initialize()
       end
     end
   end
-  self.boat.tile._map = Tile.mapChars()
+  self.boat.tile._map = Tile.mapChars("boat")
 end
 
 

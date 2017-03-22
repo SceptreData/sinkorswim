@@ -1,7 +1,6 @@
 local Grid       = require('lib/jumper.grid')
 local Pathfinder = require('lib/jumper.pathfinder')
 
-local Tile       = require('tile')
 local Sprite     = require('sprite')
 local Vector     = require('math.vec2')
 
@@ -46,6 +45,17 @@ end
 function Map:getNode(x, y)
   return self._grid:getNodeAt(x, y)
 end
+
+-- function Map:buildTileMap(atl_group)
+--   local tiles = Tile.getGroup(atl_group)
+--   assert(tiles)
+--   local t_map = {}
+--   for j = 1, self:getHeight() do
+--     t_map[j] = {}
+--     for i = 1, self:getWidth() do
+--       local c = self:getCell(i, j)
+--       local t_id = tiles._map
+
 
 -- TODO: Move this logic somewhere else, movement system?
 function Map:getDirection(origin, target)
@@ -132,6 +142,7 @@ function Map:inBounds(x, y)
   return not (x < 0 or x > self._grid:getWidth()
          or y < 0 or y > self._grid:getHeight())
 end
+
 
 
 return Map
