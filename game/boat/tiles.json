@@ -32,6 +32,7 @@
             "img": "floors.png",
             "static": true,
             "sprite_sheet":{
+                "rule": "floor",
                 "width": 4,
                 "height": 2,
                 "frames": {

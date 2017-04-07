@@ -17,6 +17,12 @@ local SPRITE_RULES = {
     elseif (x == 1 or x == map:getWidth()) and y > 1 then return 2
     else return 1
     end
+  end,
+
+  floor = function()
+    if math.random(10) == 1 then return 2
+    else return 1
+    end
   end
 }
 
