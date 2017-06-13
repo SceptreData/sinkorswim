@@ -89,10 +89,10 @@ end
 
 function Camera:canSee(e)
   local x, y = e.position:getX(), e.position:getY()
+
   if e.width or e.height then 
     return self:canSeeRange(x, y, e.width, e.height)
   end
-
   return self:canSeePoint(x, y)
 end
 
