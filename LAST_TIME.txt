@@ -1,9 +1,12 @@
 Last time, on SINK OR SWIM:
-    Cleaned up the Atlas file, split some constructors into Sprite.lua
-    Atlas:load is still a mess, but I will have to rewrite all my data files to
-    fix it.
-
+    Worked on Event module
+    Added Tests/folder and specs... not quite sure how to use with Love modules
+    however.
 NEXT:
-    Build Map?
-    Reimplement Animations?
+
+    "AAP I want to see the crew moving around the ship on their own"
+
+    "AAP I Want to hear a sound when I click on a sailor."
+
+    "AAP I want Music to loop in the background".
 
