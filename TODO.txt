@@ -2,14 +2,7 @@
 *  Sink or Swim   *
 *  To Do          *
 *******************
-
-Short Term
-**********
-    build gridship. Put sailor on ship.
-      'Boat' Factory?
-        boat initializations
-        Contains Map component.
-
+    
     Some sort of event system?
       So Visual component can pick up on alerts.
         

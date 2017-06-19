@@ -16,10 +16,10 @@ local LINT_FAIL_LVL   = 2
 -- Test suite
 local TEST_SUITE = 'busted tests/'
 
-if os.execute(LINT) >= LINT_FAIL_LVL then
-  print("\nLint check failed.")
-  os.exit()
-end
+--if os.execute(LINT) >= LINT_FAIL_LVL then
+--  print("\nLint check failed.")
+--  os.exit()
+--end
     
 if os.execute(TEST_SUITE) > 0 then
     print("\nBusted fail!")

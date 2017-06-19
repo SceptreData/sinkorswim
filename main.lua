@@ -6,9 +6,9 @@ local lume  = require('lib/lume')
 local tiny  = require('lib/tiny')
 local Log = require('lib/log')
 
-Event = require('lib/event')
 
 Atlas  = require('atlas')
+Event = require('event')
 Game   = require('game')
 Window = require('window')
 
@@ -21,7 +21,7 @@ local Animation = require('component.animation')
 local Collision = require('component.collision')
 local Map       = require('component.map')
 local Visual    = require('component.visual')
-local U         = require('utils')
+local utils     = require('utils')
 
 local fs = love.filesystem
 local lg = love.graphics
@@ -31,9 +31,8 @@ local Sprite = require('sprite')
 local sailor, green_box, world, _map, path, sub
 
 local function RunScenario()
-  --print(Sprite.mapGet('debug', 'red_box'))
   sub = Boat:new('grid_ship')
-  --                            print(sub.map:getCell(1, 1))
+
   sailor = Actor('sailor')
   green_box = Prop('debug', 2, true)
 
@@ -64,7 +63,7 @@ end
 
 function love.draw()
   lg.setColor(255, 255, 255)
-  lg.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+  lg.print("Current FPS: "..tostring(love.timer.getFPS()), 10, 10)
   Visual.system:update()
 end
 

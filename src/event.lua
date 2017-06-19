@@ -8,9 +8,11 @@ local function setSub(sub)
   Event.subscribers[sub.name] = sub
 end
 
+
 local function getSub(name)
   return Event.subscribers[name]
 end
+
 
 local function subscribe(name, cb)
   local sub = {
@@ -28,6 +30,7 @@ local function subscribe(name, cb)
   num_subs = num_subs + 1
   return sub
 end
+
 
 local function remove(sub)
     if sub.prev then
@@ -57,10 +60,12 @@ function Event.on(name, cb)
 end
 
 
+-- I pass the Subscriber to the event callback, so the event can remove
+-- the subscription if it chooses.
 function Event.send(name, ...)
   local sub = getSub(name)
   while sub do
-    if sub.cb(...) == false then
+    if sub.cb(sub, ...) == false then
       return sub
     end
     sub = sub.next
